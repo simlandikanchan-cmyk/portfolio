@@ -4,27 +4,19 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronDown } from "lucide-react"
 import { SectionHeading } from "@/components/ui/section-heading"
+import { fadeUp } from "@/lib/motion"
 import { experiences } from "@/lib/resume-data"
 import { cn } from "@/lib/utils"
-
-const slideVariant = (i: number) => ({
-  hidden: { opacity: 0, x: -30 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" as const },
-  },
-})
 
 export function Experience() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
-    <section className="py-20 sm:py-28 px-4 sm:px-8 bg-muted/30">
+    <section id="experience" className="scroll-mt-20 py-20 sm:py-28 px-4 sm:px-8 bg-muted/30">
       <div className="mx-auto max-w-5xl">
         <SectionHeading
           number="02"
-          label="// EXPERIENCE"
+          label="EXPERIENCE"
           title="Where I've Worked"
         />
 
@@ -35,13 +27,10 @@ export function Experience() {
             {experiences.map((exp, idx) => (
               <motion.div
                 key={idx}
-                variants={slideVariant(idx)}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
+                {...fadeUp(idx * 0.08)}
                 className="relative pl-0 sm:pl-14"
               >
-                <div className="absolute left-[11px] top-7 w-4 h-4 rounded-full border-2 border-accent bg-base hidden sm:block" />
+                <div className="absolute left-[11px] top-7 w-4 h-4 rounded-full border-2 border-accent bg-background hidden sm:block" />
 
                 <div
                   className={cn(
@@ -55,26 +44,24 @@ export function Experience() {
                     onClick={() =>
                       setOpenIndex(openIndex === idx ? null : idx)
                     }
-                    className="w-full flex items-start justify-between gap-4 p-5 sm:p-6 text-left"
+                    className="w-full flex items-start justify-between gap-4 p-5 sm:p-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
                   >
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-mono text-xs text-accent">
+                        <span className="font-mono text-meta tabular-nums text-accent">
                           {exp.period}
                         </span>
                       </div>
-                      <h3 className="font-sans text-lg font-semibold">
+                      <h3 className="font-sans text-card font-semibold">
                         {exp.role}
                       </h3>
-                      <p className="mt-0.5 text-sm text-muted-foreground font-mono">
-                        {"<"}
+                      <p className="mt-0.5 text-body-sm text-muted-foreground">
                         {exp.company}
-                        {"/>"}
                       </p>
                     </div>
                     <motion.div
                       animate={{ rotate: openIndex === idx ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
                       className="shrink-0 mt-1"
                     >
                       <ChevronDown className="w-4 h-4 text-muted-foreground" />
@@ -95,13 +82,13 @@ export function Experience() {
                           {exp.achievements.map((ach, i) => (
                             <motion.li
                               key={i}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
+                              initial={{ opacity: 0, y: 4 }}
+                              animate={{ opacity: 1, y: 0 }}
                               transition={{
                                 delay: i * 0.04,
-                                duration: 0.3,
+                                duration: 0.25,
                               }}
-                              className="flex gap-2 text-sm text-muted-foreground"
+                              className="flex gap-2 text-body-sm text-muted-foreground"
                             >
                               <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-accent" />
                               {ach}

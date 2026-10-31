@@ -1,8 +1,9 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { GraduationCap, Award, MapPin } from "lucide-react"
+import { GraduationCap, Award, MapPin, Calendar } from "lucide-react"
 import { SectionHeading } from "@/components/ui/section-heading"
+import { fadeUp } from "@/lib/motion"
 import { education, certifications } from "@/lib/resume-data"
 
 export function Education() {
@@ -11,13 +12,13 @@ export function Education() {
       <div className="mx-auto max-w-5xl">
         <SectionHeading
           number="06"
-          label="// LEARNING"
+          label="LEARNING"
           title="Education & Certifications"
         />
 
         <div className="mt-12 grid md:grid-cols-2 gap-4">
           <div>
-            <span className="font-mono text-xs text-accent flex items-center gap-2 mb-4">
+            <span className="mb-4 flex items-center gap-2 font-mono text-meta text-accent">
               <GraduationCap className="w-3.5 h-3.5" />
               education[]
             </span>
@@ -25,24 +26,24 @@ export function Education() {
               {education.map((edu, i) => (
                 <motion.div
                   key={edu.degree}
-                  initial={{ opacity: 0, x: -15 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.4 }}
+                  {...fadeUp(i * 0.07)}
                   className="p-5 rounded-xl border border-border bg-surface"
                 >
-                  <h4 className="font-sans font-medium text-sm">
+                  <h4 className="font-sans text-card font-semibold">
                     {edu.degree}
                   </h4>
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mt-1 text-body-sm text-muted-foreground">
                     {edu.institution}
                   </p>
-                  <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground/70">
+                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-meta text-muted-foreground">
                     <span className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3" />
+                      <MapPin className="h-3 w-3" aria-hidden="true" />
                       {edu.location}
                     </span>
-                    <span className="font-mono">{edu.period}</span>
+                    <span className="flex items-center gap-1 font-mono tabular-nums">
+                      <Calendar className="h-3 w-3" aria-hidden="true" />
+                      {edu.period}
+                    </span>
                   </div>
                 </motion.div>
               ))}
@@ -50,7 +51,7 @@ export function Education() {
           </div>
 
           <div>
-            <span className="font-mono text-xs text-accent flex items-center gap-2 mb-4">
+            <span className="mb-4 flex items-center gap-2 font-mono text-meta text-accent">
               <Award className="w-3.5 h-3.5" />
               certifications[]
             </span>
@@ -58,16 +59,13 @@ export function Education() {
               {certifications.map((cert, i) => (
                 <motion.div
                   key={cert.title}
-                  initial={{ opacity: 0, x: -15 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.4 }}
+                  {...fadeUp(i * 0.07)}
                   className="p-5 rounded-xl border border-border bg-surface"
                 >
-                  <h4 className="font-sans font-medium text-sm">
+                  <h4 className="font-sans text-card font-semibold">
                     {cert.title}
                   </h4>
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mt-1 text-body-sm text-muted-foreground">
                     {cert.issuer}
                   </p>
                 </motion.div>

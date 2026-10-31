@@ -1,138 +1,240 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import {
-  Phone,
+  CircleCheck,
+  Loader2,
   Mail,
   MapPin,
-  Globe,
-  ExternalLink,
-  ArrowUp,
+  Phone,
   Send,
+  type LucideIcon,
 } from "lucide-react"
+import { SectionHeading } from "@/components/ui/section-heading"
+import { fadeUp } from "@/lib/motion"
 import { personalInfo } from "@/lib/resume-data"
+import { cn } from "@/lib/utils"
+
+type FormErrors = {
+  name?: string
+  email?: string
+  message?: string
+}
+
+type ContactItem = {
+  icon: LucideIcon
+  label: string
+  value: string
+  href?: string
+}
+
+const inputClasses =
+  "h-11 w-full rounded-lg border border-input bg-background px-3.5 text-body-sm text-foreground placeholder:text-muted-foreground transition-[border-color,box-shadow,background-color] duration-200 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25 disabled:cursor-not-allowed disabled:opacity-50"
+
+const textareaClasses =
+  "min-h-28 w-full resize-y rounded-lg border border-input bg-background px-3.5 py-2.5 text-body-sm text-foreground placeholder:text-muted-foreground transition-[border-color,box-shadow,background-color] duration-200 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25 disabled:cursor-not-allowed disabled:opacity-50"
+
+const phoneHref = `tel:${personalInfo.phone.replace(/[^\d+]/g, "")}`
+
+const contactItems: ContactItem[] = [
+  {
+    icon: Phone,
+    label: "Phone",
+    value: personalInfo.phone,
+    href: phoneHref,
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    value: personalInfo.email,
+    href: `mailto:${personalInfo.email}`,
+  },
+  {
+    icon: MapPin,
+    label: "Location",
+    value: personalInfo.location,
+  },
+]
+
+function ContactCard({ icon: Icon, label, value, href }: ContactItem) {
+  const content = (
+    <>
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-accent/15 bg-accent/10 text-accent transition-colors group-hover:border-accent/30 group-hover:bg-accent/15">
+        <Icon className="h-4 w-4" aria-hidden="true" />
+      </span>
+      <span className="min-w-0">
+        <span className="block font-mono text-eyebrow uppercase text-muted-foreground">
+          {label}
+        </span>
+        <span
+          className={cn(
+            "mt-0.5 block text-body-sm font-medium [overflow-wrap:anywhere]",
+            href && "transition-colors group-hover:text-accent",
+          )}
+        >
+          {value}
+        </span>
+      </span>
+    </>
+  )
+
+  const className =
+    "group flex items-center gap-3.5 rounded-xl border border-border bg-surface p-4"
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        className={cn(
+          className,
+          "transition-colors duration-200 hover:border-accent/40 hover:bg-accent/[0.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        )}
+      >
+        {content}
+      </a>
+    )
+  }
+
+  return <div className={className}>{content}</div>
+}
+
+function FieldError({
+  id,
+  message,
+}: {
+  id: string
+  message?: string
+}) {
+  return (
+    <AnimatePresence initial={false}>
+      {message && (
+        <motion.p
+          id={id}
+          role="alert"
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -4 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          className="mt-1.5 text-meta text-red-600 dark:text-red-400"
+        >
+          {message}
+        </motion.p>
+      )}
+    </AnimatePresence>
+  )
+}
 
 export function Contact() {
-  const [submitted, setSubmitted] = useState(false)
+  const [errors, setErrors] = useState<FormErrors>({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [status, setStatus] = useState<"idle" | "opening">("idle")
+  const submittingRef = useRef(false)
+  const timeoutRef = useRef<number | null>(null)
+  const reduceMotion = useReducedMotion()
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) window.clearTimeout(timeoutRef.current)
+    }
+  }, [])
+
+  const clearError = (field: keyof FormErrors) => {
+    setErrors((current) => {
+      if (!current[field]) return current
+      const next = { ...current }
+      delete next[field]
+      return next
+    })
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (submittingRef.current) return
+
     const form = e.currentTarget
     const formData = new FormData(form)
-    const name = formData.get("name")
-    const email = formData.get("email")
-    const message = formData.get("message")
-    if (name && email && message) {
-      window.location.href = `mailto:${personalInfo.email}?subject=Portfolio Inquiry from ${name}&body=${message}`
+    const name = String(formData.get("name") ?? "").trim()
+    const email = String(formData.get("email") ?? "").trim()
+    const message = String(formData.get("message") ?? "").trim()
+
+    const nextErrors: FormErrors = {}
+    if (name.length < 2) {
+      nextErrors.name = "Please enter your name."
     }
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      nextErrors.email = "Enter a valid email address."
+    }
+    if (message.length < 10) {
+      nextErrors.message = "Please add a few more details (at least 10 characters)."
+    }
+
+    setErrors(nextErrors)
+
+    const firstError = Object.keys(nextErrors)[0]
+    if (firstError) {
+      document.getElementById(firstError)?.focus()
+      return
+    }
+
+    submittingRef.current = true
+    setIsSubmitting(true)
+    setStatus("opening")
+
+    const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`)
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)
+    window.location.href = `mailto:${personalInfo.email}?subject=${subject}&body=${body}`
+
+    timeoutRef.current = window.setTimeout(() => {
+      submittingRef.current = false
+      setIsSubmitting(false)
+      setStatus("idle")
+    }, 4000)
   }
 
   return (
-    <section id="contact" className="py-20 sm:py-28 px-4 sm:px-8">
+    <section id="contact" className="scroll-mt-20 pt-20 pb-16 sm:pt-28 sm:pb-20 px-4 sm:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="flex items-center gap-3 mb-2">
-              <span className="font-mono text-xs font-medium text-accent tracking-widest">
-                {'// CONNECT'}
-              </span>
-              <span className="h-px flex-1 bg-border" />
-            </div>
-            <h2 className="font-sans text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
-              Get in Touch
-            </h2>
-            <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-md leading-relaxed">
-              Have a project in mind or just want to say hello? Let&apos;s connect.
-            </p>
-          </motion.div>
-        </div>
+        <SectionHeading
+          number="07"
+          label="GET IN TOUCH"
+          title="Let's build something meaningful."
+          description="Have a project in mind or an opportunity to discuss? I'd love to hear from you."
+        />
 
-        <div className="mt-12 grid md:grid-cols-5 gap-6">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="md:col-span-2 space-y-3"
-          >
-            {[
-              { icon: Phone, label: "Phone", value: personalInfo.phone, href: `tel:${personalInfo.phone}` },
-              { icon: Mail, label: "Email", value: personalInfo.email, href: `mailto:${personalInfo.email}` },
-              { icon: MapPin, label: "Location", value: personalInfo.location },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="flex items-center gap-3 p-4 rounded-xl border border-border bg-surface"
-              >
-                <div className="p-2 rounded-lg bg-accent/10 text-accent">
-                  <item.icon className="w-4 h-4" />
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground font-mono">
-                    {item.label}
-                  </p>
-                  {item.href ? (
-                    <a
-                      href={item.href}
-                      className="text-sm font-medium hover:text-accent transition-colors"
-                    >
-                      {item.value}
-                    </a>
-                  ) : (
-                    <p className="text-sm font-medium">{item.value}</p>
-                  )}
-                </div>
-              </div>
-            ))}
-
-            <div className="flex gap-2 pt-1">
-              <motion.a
-                href={personalInfo.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-lg border border-border text-muted-foreground hover:text-accent hover:border-accent transition-all"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label="LinkedIn"
-              >
-                <ExternalLink className="w-4 h-4" />
-              </motion.a>
-              <motion.a
-                href={personalInfo.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-lg border border-border text-muted-foreground hover:text-accent hover:border-accent transition-all"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label="GitHub"
-              >
-                <Globe className="w-4 h-4" />
-              </motion.a>
+        <div className="mt-12 grid gap-6 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+          <div className="flex flex-col">
+            <div className="space-y-3">
+              {contactItems.map((item, i) => (
+                <motion.div key={item.label} {...fadeUp(i * 0.07)}>
+                  <ContactCard {...item} />
+                </motion.div>
+              ))}
             </div>
-          </motion.div>
+          </div>
 
           <motion.form
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="md:col-span-3 p-6 rounded-2xl border border-border bg-surface space-y-4"
+            noValidate
+            aria-busy={isSubmitting}
+            {...fadeUp(0.1)}
+            className="rounded-2xl border border-border bg-surface p-5 sm:p-6"
           >
-            <span className="font-mono text-xs text-accent">
-              {'// send_message'}
-            </span>
-            <div className="mt-2 space-y-4">
+            <div className="flex items-center justify-between gap-3">
+              <span className="font-mono text-meta text-accent">
+                send_message
+              </span>
+              <span className="font-mono text-eyebrow uppercase text-muted-foreground">
+                all fields required
+              </span>
+            </div>
+
+            <div className="mt-5 space-y-4">
               <div>
-                <label htmlFor="name" className="text-xs font-medium text-muted-foreground font-mono">
+                <label
+                  htmlFor="name"
+                  className="mb-1.5 block font-sans text-meta font-medium capitalize text-foreground/80"
+                >
                   name
                 </label>
                 <input
@@ -140,12 +242,25 @@ export function Contact() {
                   name="name"
                   type="text"
                   required
-                  className="mt-1 w-full px-4 py-2.5 text-sm rounded-lg border border-border bg-base focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all"
+                  autoComplete="name"
+                  aria-invalid={Boolean(errors.name)}
+                  aria-describedby={errors.name ? "name-error" : undefined}
+                  onChange={() => clearError("name")}
+                  className={cn(
+                    inputClasses,
+                    errors.name &&
+                      "border-red-500/60 focus:border-red-500 focus:ring-red-500/20",
+                  )}
                   placeholder="Your name"
                 />
+                <FieldError id="name-error" message={errors.name} />
               </div>
+
               <div>
-                <label htmlFor="email" className="text-xs font-medium text-muted-foreground font-mono">
+                <label
+                  htmlFor="email"
+                  className="mb-1.5 block font-sans text-meta font-medium capitalize text-foreground/80"
+                >
                   email
                 </label>
                 <input
@@ -153,12 +268,25 @@ export function Contact() {
                   name="email"
                   type="email"
                   required
-                  className="mt-1 w-full px-4 py-2.5 text-sm rounded-lg border border-border bg-base focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all"
+                  autoComplete="email"
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={errors.email ? "email-error" : undefined}
+                  onChange={() => clearError("email")}
+                  className={cn(
+                    inputClasses,
+                    errors.email &&
+                      "border-red-500/60 focus:border-red-500 focus:ring-red-500/20",
+                  )}
                   placeholder="your@email.com"
                 />
+                <FieldError id="email-error" message={errors.email} />
               </div>
+
               <div>
-                <label htmlFor="message" className="text-xs font-medium text-muted-foreground font-mono">
+                <label
+                  htmlFor="message"
+                  className="mb-1.5 block font-sans text-meta font-medium capitalize text-foreground/80"
+                >
                   message
                 </label>
                 <textarea
@@ -166,42 +294,78 @@ export function Contact() {
                   name="message"
                   required
                   rows={4}
-                  className="mt-1 w-full px-4 py-2.5 text-sm rounded-lg border border-border bg-base focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all resize-none"
-                  placeholder="Your message..."
+                  aria-invalid={Boolean(errors.message)}
+                  aria-describedby={errors.message ? "message-error" : undefined}
+                  onChange={() => clearError("message")}
+                  className={cn(
+                    textareaClasses,
+                    errors.message &&
+                      "border-red-500/60 focus:border-red-500 focus:ring-red-500/20",
+                  )}
+                  placeholder="Tell me about your project or opportunity..."
                 />
+                <FieldError id="message-error" message={errors.message} />
               </div>
+
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-accent text-accent-foreground font-medium text-sm hover:opacity-90 transition-all"
+                disabled={isSubmitting}
+                whileHover={
+                  reduceMotion || isSubmitting ? undefined : { scale: 1.01 }
+                }
+                whileTap={
+                  reduceMotion || isSubmitting ? undefined : { scale: 0.99 }
+                }
+                className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-accent px-6 text-ui font-medium text-accent-foreground transition-colors duration-200 hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface disabled:pointer-events-none disabled:opacity-60"
               >
-                {submitted ? "Sent!" : "Send Message"}
-                <Send className="w-3.5 h-3.5" />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                    Opening email app...
+                  </>
+                ) : (
+                  <>
+                    Send Message
+                    <Send
+                      className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                  </>
+                )}
               </motion.button>
+
+              <AnimatePresence initial={false}>
+                {status === "opening" && (
+                  <motion.p
+                    role="status"
+                    aria-live="polite"
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 4 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className="flex items-start gap-2 rounded-lg border border-accent/20 bg-accent/5 px-3 py-2 text-meta text-muted-foreground"
+                  >
+                    <CircleCheck
+                      className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent"
+                      aria-hidden="true"
+                    />
+                    <span>
+                      Your email app should open now. If it doesn&apos;t, email me
+                      at{" "}
+                      <a
+                        href={`mailto:${personalInfo.email}`}
+                        className="text-accent hover:underline"
+                      >
+                        {personalInfo.email}
+                      </a>
+                      .
+                    </span>
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </div>
           </motion.form>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="mt-16 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left"
-        >
-          <p className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} {personalInfo.name}. Built with Next.js &middot; Framer Motion &middot; Tailwind CSS
-          </p>
-          <motion.button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-accent transition-colors"
-            whileHover={{ y: -2 }}
-          >
-            Back to top
-            <ArrowUp className="w-3 h-3" />
-          </motion.button>
-        </motion.div>
       </div>
     </section>
   )

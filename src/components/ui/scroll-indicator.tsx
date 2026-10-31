@@ -1,13 +1,19 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion"
 import { navLinks } from "@/lib/resume-data"
 
 export function ScrollIndicator() {
   const { scrollYProgress } = useScroll()
   const height = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
   const [active, setActive] = useState("")
+  const reduceMotion = useReducedMotion()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,21 +48,21 @@ export function ScrollIndicator() {
             <button
               key={id}
               onClick={() =>
-                document
-                  .getElementById(id)
-                  ?.scrollIntoView({ behavior: "smooth" })
+                document.getElementById(id)?.scrollIntoView({
+                  behavior: reduceMotion ? "auto" : "smooth",
+                })
               }
-              className="group relative flex items-center justify-center"
+              className="group relative flex items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label={link.label}
             >
               <span
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`h-2 w-2 rounded-full transition-[background-color,transform] duration-300 ${
                   active === id
-                    ? "bg-accent scale-125"
+                    ? "scale-125 bg-accent"
                     : "bg-muted-foreground/30 group-hover:bg-muted-foreground/60"
                 }`}
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-xs font-mono text-muted-foreground whitespace-nowrap">
+              <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 whitespace-nowrap font-mono text-xs text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
                 {link.label}
               </span>
             </button>

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { SectionHeading } from "@/components/ui/section-heading"
 import { AnimatedCounter } from "@/components/ui/animated-counter"
+import { fadeUp } from "@/lib/motion"
 import { featuredStats } from "@/lib/resume-data"
 import {
   Shield,
@@ -15,65 +16,74 @@ import {
 
 const statIcons = [Code, Server, Zap, Shield, Layers, Lock]
 
+const architectureItems = [
+  "Five-step Razorpay verification with HMAC signing and webhook reconciliation",
+  "18 security controls, including CSRF protection, rate limiting, role and status checks, KYC, and audit logging",
+  "AI support chatbot powered by the Anthropic Claude API",
+]
+
+const highlightsItems = [
+  "Queued email flows for welcome messages, receipts, campaign updates, and security alerts",
+  "Idempotent payments with automated refund handling",
+  "An audit trail for every transaction",
+]
+
 export function CaseStudy() {
   return (
     <section className="py-20 sm:py-28 px-4 sm:px-8">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           number="03"
-          label="// FEATURED"
-          title="DonateBazaar by the Numbers"
-          description="A full-stack donation platform built with Laravel 11 — architected for scale, hardened for security, and enriched with AI."
+          label="FEATURED PROJECT"
+          title="DonateBaazar — Built for Reliable Online Fundraising"
+          description={
+            "DonateBaazar is a Laravel-based fundraising platform designed to make online donations more secure and reliable. I worked across its backend architecture, payment processing, application security, and AI-powered donor support, building features that help campaigns and donors interact with confidence."
+          }
         />
 
-        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          {featuredStats.map((stat, i) => {
-            const Icon = statIcons[i]
-            return (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06, duration: 0.4 }}
-                className="flex flex-col items-center gap-2 p-5 rounded-xl border border-border bg-surface"
-              >
-                <div className="p-2 rounded-lg bg-accent/10 text-accent">
-                  {Icon && <Icon className="w-4 h-4" />}
-                </div>
-                <AnimatedCounter
-                  to={stat.value}
-                  suffix={stat.suffix}
-                  label={stat.label}
-                  duration={2}
-                />
-              </motion.div>
-            )
-          })}
+        <div className="mt-12">
+          <h3 className="font-sans text-card font-semibold text-foreground">
+            By the Numbers
+          </h3>
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            {featuredStats.map((stat, i) => {
+              const Icon = statIcons[i]
+              return (
+                <motion.div
+                  key={stat.label}
+                  {...fadeUp(i * 0.06)}
+                  className="flex flex-col items-center gap-2 p-5 rounded-xl border border-border bg-surface"
+                >
+                  <div className="p-2 rounded-lg bg-accent/10 text-accent">
+                    {Icon && <Icon className="w-4 h-4" />}
+                  </div>
+                  <AnimatedCounter
+                    to={stat.value}
+                    suffix={stat.suffix}
+                    label={stat.label}
+                    duration={1.2}
+                  />
+                </motion.div>
+              )
+            })}
+          </div>
         </div>
 
-        <div className="mt-8 grid md:grid-cols-2 gap-3">
+        <div className="mt-10 grid md:grid-cols-2 gap-6">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.5 }}
+            {...fadeUp(0.12)}
             className="p-6 rounded-2xl border border-border bg-surface"
           >
-            <span className="font-mono text-xs text-accent">
-              {"// architecture"}
-            </span>
-            <div className="mt-4 space-y-2">
-              {[
-                "5-layer Razorpay verification with HMAC signing & webhook reconciliation",
-                "18 security controls: CSRF, rate limiting, role/status middleware, KYC, audit logging",
-                "AI chatbot streaming via Anthropic Claude API for donor support",
-              ].map((item, i) => (
+            <h3 className="mb-4 font-sans text-card font-semibold text-foreground">
+              Architecture &amp; Engineering
+            </h3>
+            <div className="space-y-3">
+              {architectureItems.map((item, i) => (
                 <div
                   key={i}
-                  className="flex gap-2 text-sm text-muted-foreground"
+                  className="flex gap-2 text-body-sm text-muted-foreground"
                 >
-                  <span className="shrink-0 mt-1 w-1.5 h-1.5 rounded-full bg-accent" />
+                  <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-accent" />
                   {item}
                 </div>
               ))}
@@ -81,26 +91,19 @@ export function CaseStudy() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.5 }}
+            {...fadeUp(0.18)}
             className="p-6 rounded-2xl border border-border bg-surface"
           >
-            <span className="font-mono text-xs text-accent">
-              {"// highlights"}
-            </span>
-            <div className="mt-4 space-y-2">
-              {[
-                "Automated email lifecycle via Laravel queues",
-                "Idempotent payment processing with refund handling",
-                "Comprehensive audit trail for every transaction",
-              ].map((item, i) => (
+            <h3 className="mb-4 font-sans text-card font-semibold text-foreground">
+              Key Highlights
+            </h3>
+            <div className="space-y-3">
+              {highlightsItems.map((item, i) => (
                 <div
                   key={i}
-                  className="flex gap-2 text-sm text-muted-foreground"
+                  className="flex gap-2 text-body-sm text-muted-foreground"
                 >
-                  <span className="shrink-0 mt-1 w-1.5 h-1.5 rounded-full bg-secondary" />
+                  <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-secondary" />
                   {item}
                 </div>
               ))}

@@ -26,12 +26,13 @@ export function ThemeToggle() {
   return (
     <motion.button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="relative flex items-center justify-center w-9 h-9 rounded-full bg-muted hover:bg-muted/80 transition-colors"
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
+      className="relative flex h-9 w-9 items-center justify-center rounded-full bg-muted transition-colors duration-200 hover:bg-muted/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      whileHover={{ scale: 1.06 }}
+      whileTap={{ scale: 0.95 }}
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
     >
-      <svg
+      <motion.svg
+        key={isDark ? "moon" : "sun"}
         width="18"
         height="18"
         viewBox="0 0 24 24"
@@ -41,13 +42,12 @@ export function ThemeToggle() {
         strokeLinecap="round"
         strokeLinejoin="round"
         className="text-accent"
+        initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
+        animate={{ opacity: 1, rotate: 0, scale: 1 }}
+        transition={{ duration: 0.3, ease: "easeOut" as const }}
       >
-        <motion.path
-          d={isDark ? moonPath : sunPath}
-          animate={{ d: isDark ? moonPath : sunPath }}
-          transition={{ duration: 0.4, ease: "easeInOut" as const }}
-        />
-      </svg>
+        <path d={isDark ? moonPath : sunPath} />
+      </motion.svg>
     </motion.button>
   )
 }

@@ -1,23 +1,36 @@
 "use client"
 
 import { useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
 import { ArrowDown, ExternalLink, Globe, Mail } from "lucide-react"
+import { DeveloperProfileCard } from "@/components/ui/developer-profile-card"
 import { MagneticButton } from "@/components/ui/magnetic-button"
 import { personalInfo } from "@/lib/resume-data"
 
-function SplitText({ text, className }: { text: string; className?: string }) {
+function SplitText({
+  text,
+  className,
+  delay = 0,
+  reduceMotion = false,
+}: {
+  text: string
+  className?: string
+  delay?: number
+  reduceMotion?: boolean | null
+}) {
   return (
     <span className={className}>
       {text.split(" ").map((word, wi) => (
         <span key={wi} className="inline-block overflow-hidden mr-[0.25em] last:mr-0">
           <motion.span
             className="inline-block"
-            initial={{ y: "100%", clipPath: "inset(0 0 100% 0)" }}
+            initial={
+              reduceMotion ? false : { y: "100%", clipPath: "inset(0 0 100% 0)" }
+            }
             animate={{ y: 0, clipPath: "inset(0 0 0% 0)" }}
             transition={{
-              duration: 0.6,
-              delay: wi * 0.08,
+              duration: reduceMotion ? 0 : 0.6,
+              delay: reduceMotion ? 0 : delay + wi * 0.06,
               ease: [0.33, 1, 0.68, 1],
             }}
           >
@@ -31,66 +44,76 @@ function SplitText({ text, className }: { text: string; className?: string }) {
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null)
+  const reduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   })
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"])
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+  const glowY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"])
+  const glowYSecondary = useTransform(scrollYProgress, [0, 1], ["0%", "-4%"])
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0])
 
   return (
     <section
       id="hero"
       ref={ref}
-      className="relative min-h-screen flex items-center px-4 sm:px-8 pt-16 overflow-hidden"
+      className="relative min-h-screen flex items-center px-4 sm:px-8 pt-16 pb-24 lg:pb-0 overflow-hidden"
     >
       <div className="absolute inset-0 -z-10">
         <motion.div
-          style={{ y }}
+          style={reduceMotion ? undefined : { y: glowY }}
           className="absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] rounded-full bg-accent/8 blur-[100px]"
         />
         <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]) }}
+          style={reduceMotion ? undefined : { y: glowYSecondary }}
           className="absolute bottom-[10%] left-[-5%] w-[30vw] h-[30vw] max-w-[400px] max-h-[400px] rounded-full bg-accent/5 blur-[80px]"
         />
       </div>
 
       <motion.div
-        style={{ opacity }}
-        className="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-8 items-center"
+        style={reduceMotion ? undefined : { opacity: contentOpacity }}
+        className="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-10 lg:gap-8 items-center"
       >
         <div className="lg:col-span-7 relative">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
             className="flex items-center gap-3 mb-6"
           >
-            <span className="font-mono text-xs font-medium text-accent tracking-widest">
-              INTRODUCING
+            <span className="font-mono text-eyebrow font-medium uppercase text-accent">
+              HELLO
             </span>
             <span className="h-px flex-1 max-w-20 bg-border" />
           </motion.div>
 
-          <h1 className="font-sans font-bold leading-[0.9] tracking-tight">
-            <span className="text-clamp-hero block">
-              <SplitText text={personalInfo.name.split(" ")[0]} />
+          <h1 className="font-sans text-hero font-bold">
+            <span className="block">
+              <SplitText
+                text={personalInfo.name.split(" ")[0]}
+                delay={0.1}
+                reduceMotion={reduceMotion}
+              />
             </span>
-            <span className="text-clamp-hero block text-accent mt-1">
-              <SplitText text={personalInfo.name.split(" ")[1]} />
+            <span className="mt-1 block text-accent">
+              <SplitText
+                text={personalInfo.name.split(" ")[1]}
+                delay={0.16}
+                reduceMotion={reduceMotion}
+              />
             </span>
           </h1>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.5 }}
+            transition={{ delay: 0.22, duration: 0.4 }}
             className="mt-6 flex flex-wrap items-center gap-3"
           >
-            <span className="font-mono text-xs text-accent bg-accent/10 px-3 py-1 rounded-full">
-              role: backend
+            <span className="font-mono text-meta text-accent bg-accent/10 px-3 py-1 rounded-full">
+              role: full-stack
             </span>
-            <span className="font-mono text-xs text-muted-foreground">
+            <span className="font-mono text-meta text-muted-foreground">
               {personalInfo.role}
             </span>
           </motion.div>
@@ -98,8 +121,8 @@ export function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-            className="mt-4 text-sm sm:text-base text-muted-foreground max-w-md leading-relaxed"
+            transition={{ delay: 0.3, duration: 0.4 }}
+            className="mt-4 max-w-lg text-body text-muted-foreground"
           >
             {personalInfo.intro}
           </motion.p>
@@ -107,7 +130,7 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.5 }}
+            transition={{ delay: 0.38, duration: 0.4 }}
             className="mt-8 flex flex-wrap items-center gap-3"
           >
             <MagneticButton
@@ -115,7 +138,7 @@ export function Hero() {
               variant="primary"
             >
               View Work
-              <ArrowDown className="w-3.5 h-3.5" />
+              <ArrowDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-y-0.5" />
             </MagneticButton>
             <MagneticButton
               href="#contact"
@@ -128,16 +151,16 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
+            transition={{ delay: 0.46, duration: 0.4 }}
             className="mt-6 flex items-center gap-3"
           >
             <motion.a
               href={personalInfo.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-full border border-border text-muted-foreground hover:text-accent hover:border-accent transition-colors"
-              whileHover={{ scale: 1.15 }}
-              whileTap={{ scale: 0.9 }}
+              className="rounded-full border border-border p-2 text-muted-foreground transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              whileHover={{ scale: 1.06 }}
+              whileTap={{ scale: 0.95 }}
               aria-label="LinkedIn"
             >
               <ExternalLink className="w-4 h-4" />
@@ -146,18 +169,18 @@ export function Hero() {
               href={personalInfo.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-full border border-border text-muted-foreground hover:text-accent hover:border-accent transition-colors"
-              whileHover={{ scale: 1.15 }}
-              whileTap={{ scale: 0.9 }}
+              className="rounded-full border border-border p-2 text-muted-foreground transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              whileHover={{ scale: 1.06 }}
+              whileTap={{ scale: 0.95 }}
               aria-label="GitHub"
             >
               <Globe className="w-4 h-4" />
             </motion.a>
             <motion.a
               href={`mailto:${personalInfo.email}`}
-              className="p-2 rounded-full border border-border text-muted-foreground hover:text-accent hover:border-accent transition-colors"
-              whileHover={{ scale: 1.15 }}
-              whileTap={{ scale: 0.9 }}
+              className="rounded-full border border-border p-2 text-muted-foreground transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              whileHover={{ scale: 1.06 }}
+              whileTap={{ scale: 0.95 }}
               aria-label="Email"
             >
               <Mail className="w-4 h-4" />
@@ -165,66 +188,30 @@ export function Hero() {
           </motion.div>
         </div>
 
-        <div className="hidden lg:block lg:col-span-5 relative">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 0.7, ease: "easeOut" as const }}
-            className="relative"
-          >
-            <div className="aspect-square max-w-sm mx-auto rounded-2xl border border-border bg-surface overflow-hidden relative">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="font-mono text-xs text-accent mb-2">
-                    {"// system.status"}
-                  </div>
-                  <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                    <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                    active
-                  </div>
-                  <div className="mt-6 space-y-2 text-left px-8">
-                    {[
-                      "stack: laravel, php",
-                      "db: mysql, postgresql",
-                      "security: hardened",
-                      "uptime: 99.9%",
-                    ].map((line, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 1 + i * 0.1, duration: 0.3 }}
-                        className="font-mono text-xs text-muted-foreground"
-                      >
-                        <span className="text-accent">$</span> {line}
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <motion.div
-              animate={{ rotate: [0, 5, 0] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" as const }}
-              className="absolute -bottom-4 -right-4 w-24 h-24 rounded-xl border border-accent/20 bg-accent/5 -z-10"
-            />
-          </motion.div>
+        <div className="relative w-full lg:col-span-5">
+          <DeveloperProfileCard />
         </div>
       </motion.div>
 
       <motion.button
         onClick={() =>
-          document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" })
+          document.querySelector("#about")?.scrollIntoView({
+            behavior: reduceMotion ? "auto" : "smooth",
+          })
         }
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-accent transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 rounded-full p-1 text-muted-foreground transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.6 }}
+        transition={{ delay: 0.8, duration: 0.25 }}
         aria-label="Scroll to about"
       >
         <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" as const }}
+          animate={reduceMotion ? undefined : { y: [0, 6, 0] }}
+          transition={
+            reduceMotion
+              ? undefined
+              : { duration: 2, repeat: Infinity, ease: "easeInOut" as const }
+          }
         >
           <ArrowDown className="w-5 h-5" />
         </motion.div>

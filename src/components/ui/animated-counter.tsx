@@ -1,6 +1,13 @@
 "use client"
 
-import { useMotionValue, useTransform, animate, useInView, motion } from "framer-motion"
+import {
+  useMotionValue,
+  useTransform,
+  animate,
+  useInView,
+  useReducedMotion,
+  motion,
+} from "framer-motion"
 import { useEffect, useRef } from "react"
 
 interface AnimatedCounterProps {
@@ -22,25 +29,29 @@ export function AnimatedCounter({
   const rounded = useTransform(() => Math.round(count.get()))
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: "-100px" })
+  const reduceMotion = useReducedMotion()
 
   useEffect(() => {
-    if (inView) {
-      count.set(from)
-      animate(count, to, { duration, ease: "easeOut" as const })
+    if (!inView) return
+    count.set(from)
+    if (reduceMotion) {
+      count.set(to)
+      return
     }
-  }, [inView, count, from, to, duration])
+    animate(count, to, { duration, ease: "easeOut" as const })
+  }, [inView, count, from, to, duration, reduceMotion])
 
   return (
     <div ref={ref} className="text-center">
       <div className="flex items-baseline justify-center gap-0">
-        <motion.span className="text-3xl sm:text-4xl font-sans font-bold text-accent">
+        <motion.span className="font-sans text-3xl font-bold tabular-nums tracking-tight text-accent sm:text-4xl">
           {rounded}
         </motion.span>
-        <span className="text-2xl sm:text-3xl font-sans font-bold text-accent">
+        <span className="font-sans text-2xl font-bold tabular-nums tracking-tight text-accent sm:text-3xl">
           {suffix}
         </span>
       </div>
-      <p className="mt-1 text-sm text-muted-foreground">{label}</p>
+      <p className="mt-1 text-meta text-muted-foreground">{label}</p>
     </div>
   )
 }

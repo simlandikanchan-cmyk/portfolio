@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/ui/navbar"
-import { AnimatedCursor } from "@/components/ui/animated-cursor"
 import { ScrollIndicator } from "@/components/ui/scroll-indicator"
+import { SiteFooter } from "@/components/ui/site-footer"
 import { Hero } from "@/components/sections/hero"
 import { About } from "@/components/sections/about"
 import { Experience } from "@/components/sections/experience"
@@ -13,7 +13,6 @@ import { Contact } from "@/components/sections/contact"
 export default function Home() {
   return (
     <>
-      <AnimatedCursor />
       <Navbar />
       <ScrollIndicator />
       <main>
@@ -26,6 +25,7 @@ export default function Home() {
         <Education />
         <Contact />
       </main>
+      <SiteFooter />
     </>
   )
 }

@@ -2,15 +2,16 @@
 
 import { motion } from "framer-motion"
 import { SectionHeading } from "@/components/ui/section-heading"
+import { fadeUp } from "@/lib/motion"
 import { skillGroups } from "@/lib/resume-data"
 
 export function Skills() {
   return (
-    <section className="py-20 sm:py-28 px-4 sm:px-8 bg-muted/30">
+    <section id="skills" className="scroll-mt-20 py-20 sm:py-28 px-4 sm:px-8 bg-muted/30">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           number="04"
-          label="// TOOLBOX"
+          label="TOOLBOX"
           title="Technical Skills"
         />
 
@@ -18,33 +19,20 @@ export function Skills() {
           {skillGroups.map((group, i) => (
             <motion.div
               key={group.category}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.4 }}
+              {...fadeUp(i * 0.08, 20)}
               className="p-5 rounded-xl border border-border bg-surface"
             >
-              <span className="font-mono text-xs text-accent">
+              <span className="font-mono text-meta text-accent">
                 {group.category.toLowerCase().replace(/\s+/g, "_")}()
               </span>
               <div className="mt-4 flex flex-wrap gap-2">
                 {group.skills.map((skill) => (
-                  <motion.span
+                  <span
                     key={skill}
-                    className="px-3 py-1.5 text-xs font-medium rounded-lg bg-muted text-muted-foreground font-mono"
-                    whileHover={{
-                      scale: 1.05,
-                      backgroundColor: "var(--accent)",
-                      color: "var(--accent-foreground)",
-                    }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 17,
-                    }}
+                    className="rounded-lg bg-muted px-3 py-1.5 font-mono text-meta font-medium text-muted-foreground"
                   >
                     {skill}
-                  </motion.span>
+                  </span>
                 ))}
               </div>
             </motion.div>

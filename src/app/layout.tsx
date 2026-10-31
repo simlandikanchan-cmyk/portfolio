@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Bricolage_Grotesque, JetBrains_Mono } from "next/font/google"
 import { ThemeProvider } from "next-themes"
+import { MotionProvider } from "@/components/ui/motion-provider"
 import "./globals.css"
 
 const bricolage = Bricolage_Grotesque({
@@ -39,7 +40,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange={false}
         >
-          {children}
+          <MotionProvider>{children}</MotionProvider>
         </ThemeProvider>
       </body>
     </html>
