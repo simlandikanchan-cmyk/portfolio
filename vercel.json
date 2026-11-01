@@ -17,7 +17,7 @@
           "value": "portfolio-mu-eight-39.vercel.app"
         }
       ],
-      "destination": "https://portfolio-mnxe.vercel.app/:path*",
+      "destination": "https://kanchansimlandi.vercel.app/:path*",
       "permanent": true
     }
   ]
