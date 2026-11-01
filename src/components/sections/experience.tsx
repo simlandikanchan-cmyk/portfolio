@@ -78,7 +78,7 @@ export function Experience() {
                         transition={{ duration: 0.3, ease: "easeInOut" as const }}
                         className="overflow-hidden"
                       >
-                        <ul className="px-5 sm:px-6 pb-5 sm:pb-6 space-y-2">
+                        <ul className="max-w-2xl space-y-2 px-5 pb-5 sm:px-6 sm:pb-6">
                           {exp.achievements.map((ach, i) => (
                             <motion.li
                               key={i}
@@ -88,7 +88,7 @@ export function Experience() {
                                 delay: i * 0.04,
                                 duration: 0.25,
                               }}
-                              className="flex gap-2 text-body-sm text-muted-foreground"
+                              className="flex gap-2 text-pretty text-body-sm text-muted-foreground"
                             >
                               <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-accent" />
                               {ach}

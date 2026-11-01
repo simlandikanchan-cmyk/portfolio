@@ -32,7 +32,7 @@ export function Projects() {
                   <ExternalLink className="mt-6 h-4 w-4 shrink-0 text-muted-foreground opacity-0 transition-[opacity,transform,color] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent group-hover:opacity-100" />
                 </div>
 
-                <p className="mt-3 text-body-sm text-muted-foreground">
+                <p className="mt-3 max-w-prose text-pretty text-body-sm text-muted-foreground">
                   {project.description}
                 </p>
 
@@ -47,11 +47,11 @@ export function Projects() {
                   ))}
                 </div>
 
-                <ul className="mt-4 space-y-1.5">
+                <ul className="mt-4 max-w-prose space-y-1.5">
                   {project.highlights.map((h, j) => (
                     <li
                       key={j}
-                      className="flex gap-2 text-body-sm text-muted-foreground"
+                      className="flex gap-2 text-pretty text-body-sm text-muted-foreground"
                     >
                       <span className="shrink-0 mt-1 w-1 h-1 rounded-full bg-accent" />
                       {h}

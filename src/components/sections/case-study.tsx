@@ -81,7 +81,7 @@ export function CaseStudy() {
               {architectureItems.map((item, i) => (
                 <div
                   key={i}
-                  className="flex gap-2 text-body-sm text-muted-foreground"
+                  className="flex max-w-prose gap-2 text-pretty text-body-sm text-muted-foreground"
                 >
                   <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-accent" />
                   {item}
@@ -101,7 +101,7 @@ export function CaseStudy() {
               {highlightsItems.map((item, i) => (
                 <div
                   key={i}
-                  className="flex gap-2 text-body-sm text-muted-foreground"
+                  className="flex max-w-prose gap-2 text-pretty text-body-sm text-muted-foreground"
                 >
                   <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-secondary" />
                   {item}

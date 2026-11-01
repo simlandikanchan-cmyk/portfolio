@@ -149,7 +149,7 @@ export function DeveloperProfileCard() {
                 <p className="font-mono text-eyebrow uppercase text-accent">
                   Featured Project
                 </p>
-                <p className="mt-1.5 font-sans text-lg font-semibold text-foreground">
+                <p className="mt-1.5 font-sans text-lg font-semibold leading-tight text-foreground">
                   DonateBazaar
                 </p>
                 <p className="mt-0.5 text-meta text-muted-foreground">

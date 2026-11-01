@@ -25,7 +25,7 @@ export function SiteFooter() {
       <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-8 sm:py-12">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-xs">
-            <p className="text-card font-semibold">
+            <p className="text-xl font-semibold leading-tight">
               {personalInfo.name}
             </p>
             <p className="mt-1 font-mono text-eyebrow uppercase text-accent">

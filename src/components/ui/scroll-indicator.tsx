@@ -62,7 +62,7 @@ export function ScrollIndicator() {
                     : "bg-muted-foreground/30 group-hover:bg-muted-foreground/60"
                 }`}
               />
-              <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 whitespace-nowrap font-mono text-xs text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+              <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 whitespace-nowrap font-mono text-meta text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
                 {link.label}
               </span>
             </button>

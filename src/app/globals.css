@@ -29,7 +29,7 @@
   --text-card--letter-spacing: -0.012em;
   --text-body: clamp(1rem, 0.25vw + 0.95rem, 1.125rem);
   --text-body--line-height: 1.7;
-  --text-body-sm: clamp(0.9375rem, 0.2vw + 0.9rem, 1rem);
+  --text-body-sm: clamp(1rem, 0.15vw + 0.97rem, 1.0625rem);
   --text-body-sm--line-height: 1.65;
   --text-ui: 0.9375rem;
   --text-ui--line-height: 1.5;

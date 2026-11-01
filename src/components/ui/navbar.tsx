@@ -121,7 +121,7 @@ export function Navbar() {
         <nav className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-8 h-16">
           <button
             onClick={handleBrandClick}
-            className="rounded-md font-sans text-lg font-bold tracking-tight transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="rounded-md font-sans text-lg font-bold leading-none tracking-tight transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {personalInfo.name.split(" ")[0]}
           </button>
@@ -201,7 +201,7 @@ export function Navbar() {
             <div className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4 sm:px-8">
               <button
                 onClick={handleBrandClick}
-                className="font-sans text-lg font-bold tracking-tight hover:text-accent transition-colors"
+                className="font-sans text-lg font-bold leading-none tracking-tight transition-colors hover:text-accent"
               >
                 {personalInfo.name.split(" ")[0]}
               </button>
