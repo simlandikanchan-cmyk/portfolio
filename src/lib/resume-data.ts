@@ -2,6 +2,7 @@ export interface Experience {
   role: string
   company: string
   period: string
+  note?: string
   achievements: string[]
 }
 
@@ -38,7 +39,7 @@ export const personalInfo = {
   phone: "+91-8617830875",
   email: "1707368kanchan@gmail.com",
   location: "Suri, Birbhum, 731101",
-  linkedin: "https://www.linkedin.com/",
+  linkedin: "https://www.linkedin.com/in/kanchan-simlandi-47932219b",
   github: "https://github.com/simlandikanchan-cmyk/",
   languages: ["English", "Hindi", "Bengali"] as const,
   strengths: [
@@ -58,7 +59,7 @@ export const experiences: Experience[] = [
     company: "Hair Rap by YoYo Pvt Ltd",
     period: "Jul 2025 – Present",
     achievements: [
-      "Took ownership of building DonateBaazar, a fundraising platform developed from the ground up. Worked across the application’s backend architecture, database design, business logic, and core features, building a foundation that supports its growing functionality.",
+      "Took ownership of building DonateBazaar, a fundraising platform developed from the ground up. Worked across the application’s backend architecture, database design, business logic, and core features, building a foundation that supports its growing functionality.",
       "Built a secure, five-step Razorpay payment flow that handles payment verification, webhook events, duplicate requests, and refunds, helping ensure donations are processed reliably and financial records remain consistent.",
       "Strengthened application security with 18 implemented controls, covering CSRF protection, rate limiting, role-based permissions, KYC verification, account-status checks, and audit logging.",
       "Integrated an AI-powered support chatbot using Anthropic Claude to help donors find answers to common questions quickly and make the donation experience more accessible.",
@@ -81,6 +82,7 @@ export const experiences: Experience[] = [
     role: "Developer",
     company: "Alongkari",
     period: "Feb 2024 – Feb 2025",
+    note: "Contract",
     achievements: [
       "Developed and maintained WordPress websites using custom themes, plugins, and page builders.",
       "Customized website layouts and functionality to meet client requirements and improve user experience.",

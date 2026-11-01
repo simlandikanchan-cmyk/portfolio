@@ -35,9 +35,9 @@ export function CaseStudy() {
         <SectionHeading
           number="03"
           label="FEATURED PROJECT"
-          title="DonateBaazar — Built for Reliable Online Fundraising"
+          title="DonateBazaar — Built for Reliable Online Fundraising"
           description={
-            "DonateBaazar is a Laravel-based fundraising platform designed to make online donations more secure and reliable. I worked across its backend architecture, payment processing, application security, and AI-powered donor support, building features that help campaigns and donors interact with confidence."
+            "DonateBazaar is a Laravel-based fundraising platform designed to make online donations more secure and reliable. I worked across its backend architecture, payment processing, application security, and AI-powered donor support, building features that help campaigns and donors interact with confidence."
           }
         />
 

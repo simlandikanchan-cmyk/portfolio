@@ -13,7 +13,7 @@ export function Experience() {
 
   return (
     <section id="experience" className="scroll-mt-20 py-20 sm:py-28 px-4 sm:px-8 bg-muted/30">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-4xl">
         <SectionHeading
           number="02"
           label="EXPERIENCE"
@@ -47,7 +47,7 @@ export function Experience() {
                     className="w-full flex items-start justify-between gap-4 p-5 sm:p-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
                   >
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
+                      <div className="flex items-center gap-2 mb-1 sm:hidden">
                         <span className="font-mono text-meta tabular-nums text-accent">
                           {exp.period}
                         </span>
@@ -55,17 +55,27 @@ export function Experience() {
                       <h3 className="font-sans text-card font-semibold">
                         {exp.role}
                       </h3>
-                      <p className="mt-0.5 text-body-sm text-muted-foreground">
-                        {exp.company}
+                      <p className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-body-sm text-muted-foreground">
+                        <span>{exp.company}</span>
+                        {exp.note && (
+                          <span className="rounded border border-border px-1.5 py-0.5 font-mono text-[10px] uppercase leading-none tracking-wide text-muted-foreground/80">
+                            {exp.note}
+                          </span>
+                        )}
                       </p>
                     </div>
-                    <motion.div
-                      animate={{ rotate: openIndex === idx ? 180 : 0 }}
-                      transition={{ duration: 0.25, ease: "easeOut" }}
-                      className="shrink-0 mt-1"
-                    >
-                      <ChevronDown className="w-4 h-4 text-muted-foreground" />
-                    </motion.div>
+                    <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+                      <span className="hidden font-mono text-meta tabular-nums text-accent sm:inline">
+                        {exp.period}
+                      </span>
+                      <motion.div
+                        animate={{ rotate: openIndex === idx ? 180 : 0 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        className="mt-1"
+                      >
+                        <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                      </motion.div>
+                    </div>
                   </button>
 
                   <AnimatePresence initial={false}>
