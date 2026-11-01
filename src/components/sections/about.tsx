@@ -53,14 +53,19 @@ export function About() {
                 {String(personalInfo.languages.length).padStart(2, "0")}
               </span>
             </div>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 space-y-2">
               {personalInfo.languages.map((lang) => (
-                <span
-                  key={lang}
-                  className="inline-flex items-center rounded-full border border-accent/20 bg-accent/10 px-3 py-1 font-mono text-meta font-medium text-accent"
+                <div
+                  key={lang.name}
+                  className="flex items-center justify-between gap-3 rounded-lg border border-border/80 bg-background/40 px-3 py-2"
                 >
-                  {lang}
-                </span>
+                  <span className="text-body-sm font-medium text-foreground">
+                    {lang.name}
+                  </span>
+                  <span className="font-mono text-meta text-accent">
+                    {lang.level}
+                  </span>
+                </div>
               ))}
             </div>
           </motion.div>

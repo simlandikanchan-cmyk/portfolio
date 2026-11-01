@@ -41,7 +41,11 @@ export const personalInfo = {
   location: "Suri, Birbhum, 731101",
   linkedin: "https://www.linkedin.com/in/kanchan-simlandi-47932219b",
   github: "https://github.com/simlandikanchan-cmyk/",
-  languages: ["English", "Hindi", "Bengali"] as const,
+  languages: [
+    { name: "Bengali", level: "Native" },
+    { name: "English", level: "Professional" },
+    { name: "Hindi", level: "Fluent" },
+  ] as const,
   strengths: [
     { title: "Analytical Thinking", icon: "brain" },
     { title: "Ownership & Accountability", icon: "target" },
