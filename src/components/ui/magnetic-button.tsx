@@ -9,7 +9,7 @@ interface MagneticButtonProps
   children: React.ReactNode
   href?: string
   className?: string
-  variant?: "primary" | "outline"
+  variant?: "primary" | "outline" | "ghost"
 }
 
 export function MagneticButton({
@@ -41,6 +41,8 @@ export function MagneticButton({
       "bg-accent text-accent-foreground hover:bg-accent-hover",
     outline:
       "border border-border text-foreground hover:border-accent hover:bg-muted",
+    ghost:
+      "text-muted-foreground hover:text-foreground",
   }
 
   const content = (
@@ -57,15 +59,25 @@ export function MagneticButton({
   )
 
   if (href) {
+    if (href.startsWith("#")) {
+      return (
+        <a
+          href={href}
+          onClick={(e) => {
+            e.preventDefault()
+            document
+              .querySelector(href)
+              ?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" })
+          }}
+          className="inline-flex rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        >
+          {content}
+        </a>
+      )
+    }
     return (
       <a
         href={href}
-        onClick={(e) => {
-          e.preventDefault()
-          document
-            .querySelector(href)
-            ?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" })
-        }}
         className="inline-flex rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
         {content}

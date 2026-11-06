@@ -2,9 +2,10 @@
 
 import { useRef } from "react"
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
-import { ArrowDown, ExternalLink, Globe, Mail } from "lucide-react"
+import { ArrowDown } from "lucide-react"
 import { DeveloperProfileCard } from "@/components/ui/developer-profile-card"
 import { MagneticButton } from "@/components/ui/magnetic-button"
+import { GitHubIcon, LinkedInIcon } from "@/components/ui/social-icons"
 import { personalInfo } from "@/lib/resume-data"
 
 function SplitText({
@@ -81,8 +82,8 @@ export function Hero() {
             transition={{ duration: 0.4 }}
             className="flex items-center gap-3 mb-6"
           >
-            <span className="font-mono text-eyebrow font-medium uppercase text-accent">
-              HELLO
+            <span className="font-mono text-eyebrow font-medium text-accent">
+              Hello, I&apos;m
             </span>
             <span className="h-px flex-1 max-w-20 bg-border" />
           </motion.div>
@@ -111,10 +112,10 @@ export function Hero() {
             className="mt-6 flex flex-wrap items-center gap-3"
           >
             <span className="font-mono text-meta text-accent bg-accent/10 px-3 py-1 rounded-full">
-              role: full-stack
+              role: Full-Stack / Backend
             </span>
             <span className="font-mono text-meta text-muted-foreground">
-              {personalInfo.role}
+              Laravel • PHP • MySQL • System Design
             </span>
           </motion.div>
 
@@ -124,7 +125,7 @@ export function Hero() {
             transition={{ delay: 0.3, duration: 0.4 }}
             className="mt-4 max-w-lg text-body text-muted-foreground"
           >
-            {personalInfo.intro}
+            {personalInfo.heroSummary}
           </motion.p>
 
           <motion.div
@@ -141,10 +142,10 @@ export function Hero() {
               <ArrowDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-y-0.5" />
             </MagneticButton>
             <MagneticButton
-              href="#contact"
+              href="/resume"
               variant="outline"
             >
-              Contact Me
+              View Resume
             </MagneticButton>
           </motion.div>
 
@@ -163,7 +164,7 @@ export function Hero() {
               whileTap={{ scale: 0.95 }}
               aria-label="LinkedIn"
             >
-              <ExternalLink className="w-4 h-4" />
+              <LinkedInIcon className="w-4 h-4" />
             </motion.a>
             <motion.a
               href={personalInfo.github}
@@ -174,17 +175,25 @@ export function Hero() {
               whileTap={{ scale: 0.95 }}
               aria-label="GitHub"
             >
-              <Globe className="w-4 h-4" />
+              <GitHubIcon className="w-4 h-4" />
             </motion.a>
-            <motion.a
-              href={`mailto:${personalInfo.email}`}
-              className="rounded-full border border-border p-2 text-muted-foreground transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.95 }}
-              aria-label="Email"
-            >
-              <Mail className="w-4 h-4" />
-            </motion.a>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.52, duration: 0.4 }}
+            className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-meta text-muted-foreground"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/60 motion-reduce:hidden" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+            </span>
+            <span className="text-foreground/80">
+              {personalInfo.availability}
+            </span>
+            <span aria-hidden="true">&middot;</span>
+            <span>Notice {personalInfo.noticePeriod}</span>
           </motion.div>
         </div>
 

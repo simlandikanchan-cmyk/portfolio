@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronDown } from "lucide-react"
 import { SectionHeading } from "@/components/ui/section-heading"
+import { RichText } from "@/components/ui/rich-text"
 import { fadeUp } from "@/lib/motion"
 import { experiences } from "@/lib/resume-data"
 import { cn } from "@/lib/utils"
@@ -101,7 +102,9 @@ export function Experience() {
                               className="flex gap-2 text-pretty text-body-sm text-muted-foreground"
                             >
                               <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-accent" />
-                              {ach}
+                              <span>
+                                <RichText text={ach} />
+                              </span>
                             </motion.li>
                           ))}
                         </ul>

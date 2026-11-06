@@ -121,6 +121,12 @@ p {
   }
 }
 
+@media print {
+  .noise-overlay::after {
+    display: none;
+  }
+}
+
 .noise-overlay::after {
   content: "";
   position: fixed;

@@ -1,19 +1,20 @@
 "use client"
 
 import { motion, useReducedMotion } from "framer-motion"
-import { ArrowUp, ExternalLink } from "lucide-react"
+import { ArrowUp } from "lucide-react"
 import { personalInfo } from "@/lib/resume-data"
+import { GitHubIcon, LinkedInIcon } from "@/components/ui/social-icons"
 
 const socialLinks = [
   {
     label: "GitHub",
     href: personalInfo.github,
-    icon: ExternalLink,
+    icon: GitHubIcon,
   },
   {
     label: "LinkedIn",
     href: personalInfo.linkedin,
-    icon: ExternalLink,
+    icon: LinkedInIcon,
   },
 ]
 

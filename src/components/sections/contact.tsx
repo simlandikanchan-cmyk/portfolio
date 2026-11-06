@@ -4,9 +4,12 @@ import { useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import {
   CircleCheck,
+  Clock3,
+  Download,
   Loader2,
   Mail,
   MapPin,
+  MapPinned,
   Phone,
   Send,
   type LucideIcon,
@@ -54,6 +57,16 @@ const contactItems: ContactItem[] = [
     icon: MapPin,
     label: "Location",
     value: personalInfo.location,
+  },
+  {
+    icon: Clock3,
+    label: "Notice period",
+    value: personalInfo.noticePeriod,
+  },
+  {
+    icon: MapPinned,
+    label: "Preferred locations",
+    value: personalInfo.preferredLocations.join(" · "),
   },
 ]
 
@@ -199,7 +212,7 @@ export function Contact() {
           number="07"
           label="GET IN TOUCH"
           title="Let's build something meaningful."
-          description="Have a project in mind or an opportunity to discuss? I'd love to hear from you."
+          description="Open to full-time backend and full-stack roles. Have a project in mind or an opportunity to discuss? I'd love to hear from you."
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
@@ -211,6 +224,24 @@ export function Contact() {
                 </motion.div>
               ))}
             </div>
+            <motion.div {...fadeUp(0.42)} className="mt-4">
+              <a
+                href="/resume"
+                className="group flex items-center gap-3.5 rounded-xl border border-accent/30 bg-accent/5 p-4 transition-colors duration-200 hover:border-accent/50 hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-accent/20 bg-accent/10 text-accent transition-colors group-hover:border-accent/30 group-hover:bg-accent/15">
+                  <Download className="h-4 w-4" aria-hidden="true" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block font-mono text-eyebrow uppercase text-accent">
+                    Resume
+                  </span>
+                  <span className="mt-0.5 block text-body-sm font-medium text-foreground [overflow-wrap:anywhere] transition-colors group-hover:text-accent">
+                    View or download resume
+                  </span>
+                </span>
+              </a>
+            </motion.div>
           </div>
 
           <motion.form

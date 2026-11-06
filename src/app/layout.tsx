@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { Bricolage_Grotesque, JetBrains_Mono } from "next/font/google"
 import { ThemeProvider } from "next-themes"
 import { MotionProvider } from "@/components/ui/motion-provider"
+import { personalInfo } from "@/lib/resume-data"
 import "./globals.css"
 
 const bricolage = Bricolage_Grotesque({
@@ -62,6 +63,32 @@ export const metadata: Metadata = {
   },
 }
 
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: personalInfo.name,
+  jobTitle: personalInfo.role,
+  url: siteUrl,
+  email: `mailto:${personalInfo.email}`,
+  sameAs: [personalInfo.github, personalInfo.linkedin],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Suri, Birbhum",
+    addressRegion: "West Bengal",
+    postalCode: "731101",
+    addressCountry: "IN",
+  },
+  knowsAbout: [
+    "Laravel",
+    "PHP",
+    "MySQL",
+    "Backend Development",
+    "Payment Integration",
+    "Application Security",
+    "Power BI",
+  ],
+}
+
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#fdfefa" },
@@ -81,6 +108,10 @@ export default function RootLayout({
       className={`${bricolage.variable} ${jetbrains.variable}`}
     >
       <body className="min-h-screen font-sans antialiased noise-overlay">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

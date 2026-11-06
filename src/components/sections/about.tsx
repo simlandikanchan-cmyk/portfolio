@@ -106,12 +106,6 @@ export function About() {
           {...fadeUp(0.24)}
           className="relative mt-5 overflow-hidden rounded-2xl border border-border bg-surface p-6 sm:mt-6 sm:p-8"
         >
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -top-5 right-5 select-none font-sans text-[7rem] font-bold leading-none text-accent/10"
-          >
-            &rdquo;
-          </span>
           <span className="relative font-mono text-meta text-accent">
             my_philosophy
           </span>

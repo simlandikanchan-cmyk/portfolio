@@ -30,7 +30,10 @@ const highlightsItems = [
 
 export function CaseStudy() {
   return (
-    <section className="py-20 sm:py-28 px-4 sm:px-8">
+    <section
+      id="featured"
+      className="scroll-mt-20 py-20 sm:py-28 px-4 sm:px-8"
+    >
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           number="03"
@@ -41,7 +44,14 @@ export function CaseStudy() {
           }
         />
 
-        <div className="mt-12">
+        <div className="mt-5">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1 font-mono text-meta text-muted-foreground">
+            <Lock className="h-3 w-3 text-accent" aria-hidden="true" />
+            Internal product — not publicly accessible · Demo available on request
+          </span>
+        </div>
+
+        <div className="mt-10">
           <h3 className="font-sans text-card font-semibold text-foreground">
             By the Numbers
           </h3>

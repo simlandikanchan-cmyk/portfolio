@@ -1,8 +1,15 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
-import { FileDown, X } from "lucide-react"
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+} from "framer-motion"
+import { FileText, X } from "lucide-react"
+import { LiveClock } from "./live-clock"
 import { ThemeToggle } from "./theme-toggle"
 import { navLinks, personalInfo } from "@/lib/resume-data"
 import { cn } from "@/lib/utils"
@@ -41,6 +48,16 @@ export function Navbar() {
   const reduceMotion = useReducedMotion()
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const { scrollYProgress } = useScroll()
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 24,
+    restDelta: 0.001,
+  })
+  const initials = personalInfo.name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
 
   const drawerStagger = reduceMotion ? instantStagger : stagger
   const drawerItem = reduceMotion ? instantItem : linkItem
@@ -112,18 +129,38 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          "fixed top-0 inset-x-0 z-50 transition-colors duration-300",
+          "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,box-shadow] duration-300",
           scrolled || mobileOpen
-            ? "bg-background/85 backdrop-blur-xl border-b border-border"
+            ? "border-b border-border bg-background/80 shadow-sm shadow-black/5 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70 dark:shadow-black/20"
             : "bg-transparent"
         )}
       >
-        <nav className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-8 h-16">
+        <nav
+          className={cn(
+            "mx-auto flex max-w-7xl items-center justify-between px-4 transition-[height] duration-300 sm:px-8",
+            scrolled && !mobileOpen ? "h-14" : "h-16"
+          )}
+        >
           <button
             onClick={handleBrandClick}
-            className="rounded-md font-sans text-lg font-bold leading-none tracking-tight transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            aria-label={`${personalInfo.name} — back to top`}
+            className="group flex items-center gap-2.5 rounded-xl py-1 pr-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            {personalInfo.name.split(" ")[0]}
+            <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-accent font-mono text-[0.7rem] font-bold tracking-tight text-accent-foreground shadow-sm ring-1 ring-accent/20 transition-transform duration-300 group-hover:-translate-y-0.5 motion-reduce:transform-none">
+              {initials}
+              <span
+                aria-hidden
+                className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-background bg-secondary"
+              />
+            </span>
+            <span className="hidden flex-col items-start leading-none sm:flex">
+              <span className="text-sm font-semibold tracking-tight transition-colors duration-200 group-hover:text-accent">
+                {personalInfo.name}
+              </span>
+              <span className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                Full-Stack Developer
+              </span>
+            </span>
           </button>
 
           <div className="hidden lg:flex items-center gap-1">
@@ -132,7 +169,7 @@ export function Navbar() {
                 key={link.href}
                 onClick={() => handleNav(link.href)}
                 className={cn(
-                  "group relative rounded-md px-3 py-2 text-ui font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                  "group relative rounded-lg px-3 py-2 text-ui font-medium transition-colors duration-200 hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                   active === link.href
                     ? "text-foreground"
                     : "text-muted-foreground hover:text-foreground"
@@ -152,13 +189,20 @@ export function Navbar() {
               </button>
             ))}
             <div className="ml-3 flex items-center gap-2">
+              <LiveClock className="mr-1" />
+              <span className="hidden items-center gap-1.5 rounded-full border border-border/70 bg-surface/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground xl:inline-flex">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/60 motion-reduce:hidden" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+                </span>
+                Available
+              </span>
               <ThemeToggle />
               <a
-                href="/resume.pdf"
-                download
-                className="inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-ui font-medium text-accent-foreground transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-accent-hover active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transform-none"
+                href="/resume"
+                className="group inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-ui font-medium text-accent-foreground shadow-sm shadow-accent/20 transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-accent-hover active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transform-none"
               >
-                <FileDown className="w-3.5 h-3.5" />
+                <FileText className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-0.5 motion-reduce:transform-none" />
                 Resume
               </a>
             </div>
@@ -182,6 +226,14 @@ export function Navbar() {
             </button>
           </div>
         </nav>
+        <motion.div
+          aria-hidden
+          style={{ scaleX: progress }}
+          className={cn(
+            "absolute inset-x-0 bottom-0 h-px origin-left bg-gradient-to-r from-accent via-accent to-secondary transition-opacity duration-300",
+            scrolled ? "opacity-100" : "opacity-0"
+          )}
+        />
       </header>
 
       <AnimatePresence>
@@ -201,9 +253,24 @@ export function Navbar() {
             <div className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4 sm:px-8">
               <button
                 onClick={handleBrandClick}
-                className="font-sans text-lg font-bold leading-none tracking-tight transition-colors hover:text-accent"
+                aria-label={`${personalInfo.name} — back to top`}
+                className="flex items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
-                {personalInfo.name.split(" ")[0]}
+                <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-accent font-mono text-[0.7rem] font-bold tracking-tight text-accent-foreground shadow-sm ring-1 ring-accent/20">
+                  {initials}
+                  <span
+                    aria-hidden
+                    className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-background bg-secondary"
+                  />
+                </span>
+                <span className="flex flex-col items-start leading-none">
+                  <span className="text-sm font-semibold tracking-tight">
+                    {personalInfo.name}
+                  </span>
+                  <span className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Full-Stack Developer
+                  </span>
+                </span>
               </button>
               <div className="flex items-center gap-2">
                 <ThemeToggle />
@@ -283,12 +350,11 @@ export function Navbar() {
                   className="border-t border-border bg-background p-4 sm:p-5"
                 >
                   <a
-                    href="/resume.pdf"
-                    download
+                    href="/resume"
                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3.5 text-ui font-semibold text-accent-foreground transition-colors duration-200 hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   >
-                    <FileDown className="w-4 h-4" />
-                    Download Resume
+                    <FileText className="w-4 h-4" />
+                    View Resume
                   </a>
                   <p className="mt-3 text-center font-mono text-meta text-muted-foreground">
                     Available for opportunities

@@ -25,7 +25,7 @@ export function AnimatedCounter({
   label,
   duration = 2,
 }: AnimatedCounterProps) {
-  const count = useMotionValue(from)
+  const count = useMotionValue(to)
   const rounded = useTransform(() => Math.round(count.get()))
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: "-100px" })
@@ -33,11 +33,11 @@ export function AnimatedCounter({
 
   useEffect(() => {
     if (!inView) return
-    count.set(from)
     if (reduceMotion) {
       count.set(to)
       return
     }
+    count.set(from)
     animate(count, to, { duration, ease: "easeOut" as const })
   }, [inView, count, from, to, duration, reduceMotion])
 
