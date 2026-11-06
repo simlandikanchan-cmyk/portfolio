@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { Bricolage_Grotesque, JetBrains_Mono } from "next/font/google"
 import { ThemeProvider } from "next-themes"
 import { MotionProvider } from "@/components/ui/motion-provider"
+import { SiteBackground } from "@/components/ui/site-background"
 import { personalInfo } from "@/lib/resume-data"
 import "./globals.css"
 
@@ -108,18 +109,21 @@ export default function RootLayout({
       className={`${bricolage.variable} ${jetbrains.variable}`}
     >
       <body className="min-h-screen font-sans antialiased noise-overlay">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
-        />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange={false}
-        >
-          <MotionProvider>{children}</MotionProvider>
-        </ThemeProvider>
+        <SiteBackground />
+        <div className="relative z-10">
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+          />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange={false}
+          >
+            <MotionProvider>{children}</MotionProvider>
+          </ThemeProvider>
+        </div>
       </body>
     </html>
   )

@@ -175,4 +175,24 @@ p {
               0 0 60px color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
+@keyframes aurora-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-4%, 3%, 0) scale(1.08);
+  }
+}
+
+@keyframes aurora-drift-reverse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
+  50% {
+    transform: translate3d(5%, -3%, 0) scale(1);
+  }
+}
+
 
