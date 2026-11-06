@@ -18,6 +18,8 @@ export interface Project {
   highlights: string[]
   href?: string
   linkLabel?: string
+  image?: string
+  imageAlt?: string
 }
 
 export interface Education {
@@ -84,6 +86,7 @@ export const experiences: Experience[] = [
       "Hardened the application with **18 security controls**: CSRF protection, rate limiting, role-based permissions, KYC, account-status checks, and audit logging.",
       "Integrated an **Anthropic Claude** support chatbot so donors get quick answers and the donation flow stays accessible.",
       "Queued background emails for welcomes, receipts, campaign updates, and security alerts — without slowing the main app.",
+      "Collaborated with the team through planning, code reviews, testing, and releases to ship DonateBazaar features on schedule.",
     ],
   },
   {
@@ -201,6 +204,8 @@ export const featuredStats = [
       ],
       href: "https://tatapravesh.com/",
       linkLabel: "Visit site",
+      image: "/image/tatapravesh.png",
+      imageAlt: "Tata Pravesh website homepage",
     },
     {
       title: "Lead Tata Pravesh",
@@ -213,6 +218,8 @@ export const featuredStats = [
       ],
       href: "https://lead.tatapravesh.com/",
       linkLabel: "Visit platform",
+      image: "/image/lead.png",
+      imageAlt: "Lead Tata Pravesh lead management platform",
     },
   {
     title: "Jewelbox",
@@ -225,6 +232,8 @@ export const featuredStats = [
     ],
     href: "https://jewelbox.co.in/",
     linkLabel: "Visit site",
+    image: "/image/jewelbox.png",
+    imageAlt: "Jewelbox jewellery storefront homepage",
   },
   {
     title: "Paris Beans",
@@ -237,6 +246,8 @@ export const featuredStats = [
     ],
     href: "https://parisbeans.vercel.app/",
     linkLabel: "Visit site",
+    image: "/image/parisbeans.png",
+    imageAlt: "Paris Beans cafe microsite homepage",
   },
   {
     title: "Vehicle Theft Analysis",
