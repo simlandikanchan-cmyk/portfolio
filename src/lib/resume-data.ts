@@ -41,9 +41,9 @@ export const personalInfo = {
   role: "Full-Stack / Backend Developer",
   tagline: "Laravel · PHP · MySQL · System Design",
   heroSummary:
-    "3+ years building secure Laravel backends and dashboards that hold up in production — payments, security, and clean data models.",
+    "I've spent four years building Laravel backends and dashboards for production apps. Most of that work has been payments, application security, and database design that has to hold up after launch.",
   intro:
-    "I'm a full-stack developer with over three years of experience building and improving web applications, primarily with PHP, Laravel, and MySQL. I've worked on everything from payment processing and application security to database optimization and dashboards that turn complex data into useful insights. I enjoy solving problems that go beyond getting a feature to work. For me, good development means building systems that are reliable, maintainable, and ready for the challenges of real-world use.",
+    "I'm a full-stack developer with over four years of experience, mostly in PHP, Laravel, and MySQL. I've worked on payment processing, application security, database optimisation, and Power BI dashboards that turn raw data into something teams can act on. I like the parts of development that don't show up in a demo: edge cases, data flow, and code that the next developer can follow. That is what keeps an application dependable once it is live.",
   phone: "+91-8617830875",
   email: "1707368kanchan@gmail.com",
   location: "Suri, Birbhum, West Bengal 731101",
@@ -65,13 +65,13 @@ export const personalInfo = {
     { name: "Hindi", level: "Fluent" },
   ] as const,
   strengths: [
-    { title: "Analytical Thinking", icon: "brain" },
-    { title: "Ownership & Accountability", icon: "target" },
-    { title: "Attention to Detail", icon: "search" },
-    { title: "Self-Motivation", icon: "zap" },
-    { title: "Clear Communication", icon: "message-square" },
-    { title: "Team Collaboration", icon: "users" },
-    { title: "Time Management", icon: "clock" },
+    { title: "Debugging edge cases", icon: "brain" },
+    { title: "Owning features end to end", icon: "target" },
+    { title: "Detailed code reviews", icon: "search" },
+    { title: "Learning new tools quickly", icon: "zap" },
+    { title: "Clear written updates", icon: "message-square" },
+    { title: "Working with product and QA", icon: "users" },
+    { title: "Shipping on schedule", icon: "clock" },
   ] as const,
 }
 
@@ -81,12 +81,12 @@ export const experiences: Experience[] = [
     company: "Hair Rap by YoYo Pvt Ltd",
     period: "Jul 2025 – Present",
     achievements: [
-      "Owned the backend of DonateBazaar, a fundraising platform built from the ground up — architecture, database design, business logic, and core features.",
-      "Built a **five-step Razorpay** payment flow covering verification, webhooks, duplicate requests, and refunds — keeping donations reliable and records consistent.",
-      "Hardened the application with **18 security controls**: CSRF protection, rate limiting, role-based permissions, KYC, account-status checks, and audit logging.",
-      "Integrated an **Anthropic Claude** support chatbot so donors get quick answers and the donation flow stays accessible.",
-      "Queued background emails for welcomes, receipts, campaign updates, and security alerts — without slowing the main app.",
-      "Collaborated with the team through planning, code reviews, testing, and releases to ship DonateBazaar features on schedule.",
+      "Owned the backend of DonateBazaar from the first schema to launch: architecture, database design, business logic, and core donation features.",
+      "Built a **five-step Razorpay** payment flow with server-side verification, webhooks, duplicate-request handling, and refunds, so donation records stay accurate.",
+      "Added **18 security controls**, including CSRF protection, rate limiting, role-based permissions, KYC checks, account-status enforcement, and audit logging.",
+      "Integrated an **Anthropic Claude** support chatbot to answer common donor questions without pulling the team into every enquiry.",
+      "Moved welcome emails, receipts, campaign updates, and security alerts onto queued jobs so they don't slow the main request.",
+      "Worked with the team through planning, code review, testing, and releases to keep DonateBazaar features shipping on schedule.",
     ],
   },
   {
@@ -94,11 +94,11 @@ export const experiences: Experience[] = [
     company: "Infomaticae Technology Pvt Ltd",
     period: "Dec 2023 – Jul 2025",
     achievements: [
-      "Built and maintained features across client web apps, including [Tata Pravesh](https://tatapravesh.com/) and [Lead Tata Pravesh](https://lead.tatapravesh.com/), supporting business operations and user workflows.",
-      "Delivered Laravel, PHP, and MySQL features from business requirements while improving the stability of existing systems.",
-      "Optimized schemas, SQL queries, and indexes for a **~40% reduction** in query execution time.",
-      "Integrated third-party REST APIs and strengthened error handling, logging, and failure recovery.",
-      "Collaborated through requirement discussions, sprint planning, code reviews, testing, and releases to ship features on schedule.",
+      "Built and maintained features for client applications, including [Tata Pravesh](https://tatapravesh.com/) and [Lead Tata Pravesh](https://lead.tatapravesh.com/), which support day-to-day business workflows.",
+      "Turned business requirements into Laravel, PHP, and MySQL features, and fixed stability issues in the existing codebase.",
+      "Reworked schemas, SQL queries, and indexes, cutting query execution time by about **40%**.",
+      "Integrated third-party REST APIs, with error handling, logging, and retries for when they fail.",
+      "Took part in requirement discussions, sprint planning, code reviews, testing, and releases.",
     ],
   },
   {
@@ -107,11 +107,11 @@ export const experiences: Experience[] = [
     period: "Feb 2024 – Feb 2025",
     note: "Concurrent contract",
     achievements: [
-      "Developed and maintained WordPress websites using custom themes, plugins, and page builders.",
-      "Customized layouts and functionality to meet client requirements and improve UX.",
-      "Built responsive pages optimized for desktop, tablet, and mobile.",
-      "Integrated and configured WordPress plugins for forms, functionality, and content management.",
-      "Managed updates, troubleshooting, and performance improvements to keep sites running smoothly.",
+      "Built and maintained WordPress sites using custom themes, plugins, and page builders.",
+      "Customised layouts and functionality around each client's requirements.",
+      "Built responsive pages that hold up on desktop, tablet, and mobile.",
+      "Set up plugins for forms, content management, and client-specific features.",
+      "Handled updates, troubleshooting, and performance fixes to keep live sites running.",
     ],
   },
   {
@@ -119,39 +119,38 @@ export const experiences: Experience[] = [
     company: "FliqaIndia",
     period: "May 2022 – Dec 2023",
     achievements: [
-      "Developed and customized WordPress websites using themes, plugins, and page builders.",
-      "Created responsive website layouts using Elementor, HTML, CSS, and JavaScript.",
-      "Integrated WordPress plugins for client-specific functionality and improved UX.",
+      "Developed and customised WordPress websites using themes, plugins, and page builders.",
+      "Built responsive layouts with Elementor, HTML, CSS, and JavaScript.",
+      "Integrated plugins for client-specific functionality and smoother user flows.",
     ],
   },
 ]
 
-  export const skillGroups: SkillGroup[] = [
-    {
-      category: "Languages and Frameworks",
-      skills: ["PHP", "Laravel", "JavaScript", "HTML5", "CSS3", "SQL", "OOP", "MVC"],
-    },
-    {
-      category: "Tools & Practices",
-      skills: ["Git", "GitHub", "RESTful APIs", "Postman"],
-    },
-    {
-      category: "Databases and Data Modeling",
-      skills: [
-        "MySQL",
-        "MariaDB",
-        "PostgreSQL",
-        "ER Modeling",
-        "Database Indexing",
-        "Triggers",
-        "Schema Design",
-      ],
-    },
+export const skillGroups: SkillGroup[] = [
+  {
+    category: "Languages and Frameworks",
+    skills: ["PHP", "Laravel", "JavaScript", "HTML5", "CSS3", "SQL", "OOP", "MVC"],
+  },
+  {
+    category: "Tools & Practices",
+    skills: ["Git", "GitHub", "RESTful APIs", "Postman"],
+  },
+  {
+    category: "Databases and Data Modeling",
+    skills: [
+      "MySQL",
+      "MariaDB",
+      "PostgreSQL",
+      "ER Modeling",
+      "Database Indexing",
+      "Triggers",
+      "Schema Design",
+    ],
+  },
   {
     category: "Payments and Integrations",
     skills: [
       "Razorpay",
-      "RESTful APIs",
       "Anthropic Claude API",
       "Webhooks",
       "Payment Verification",
@@ -192,43 +191,46 @@ export const featuredStats = [
   { label: "Payment Verification Layers", value: 5, suffix: "" },
 ]
 
-  export const projects: Project[] = [
-    {
-      title: "Tata Pravesh",
-      description:
-        "Built and enhanced features for the Tata Pravesh website using Laravel and PHP, improving database performance and supporting production releases.",
-      tech: ["Laravel", "PHP", "MySQL"],
-      highlights: [
-        "Live production site serving the Tata Pravesh brand",
-        "Feature development and performance improvements",
-      ],
-      href: "https://tatapravesh.com/",
-      linkLabel: "Visit site",
-      image: "/image/tatapravesh.png",
-      imageAlt: "Tata Pravesh website homepage",
-    },
-    {
-      title: "Lead Tata Pravesh",
-      description:
-        "Built and enhanced backend features for the Tata Pravesh lead management platform using Laravel, PHP, and MySQL to support business operations and user workflows.",
-      tech: ["Laravel", "PHP", "MySQL"],
-      highlights: [
-        "Live platform at lead.tatapravesh.com",
-        "Lead workflows backed by reliable Laravel/PHP features",
-      ],
-      href: "https://lead.tatapravesh.com/",
-      linkLabel: "Visit platform",
-      image: "/image/lead.png",
-      imageAlt: "Lead Tata Pravesh lead management platform",
-    },
+export const projects: Project[] = [
+  {
+    title: "Tata Pravesh",
+    description:
+      "Maintained and improved the Tata Pravesh website in Laravel and PHP, including database performance work and production releases.",
+    tech: ["Laravel", "PHP", "MySQL"],
+    highlights: [
+      "Live site at tatapravesh.com",
+      "Laravel and PHP feature work on a production site",
+      "Query and schema tuning alongside releases",
+    ],
+    href: "https://tatapravesh.com/",
+    linkLabel: "Visit site",
+    image: "/image/tatapravesh.png",
+    imageAlt: "Tata Pravesh website homepage",
+  },
+  {
+    title: "Lead Tata Pravesh",
+    description:
+      "Built Laravel, PHP, and MySQL features for the Tata Pravesh lead management platform and its internal workflows.",
+    tech: ["Laravel", "PHP", "MySQL"],
+    highlights: [
+      "Live platform at lead.tatapravesh.com",
+      "Backend features for lead management workflows",
+      "Laravel, PHP, and MySQL",
+    ],
+    href: "https://lead.tatapravesh.com/",
+    linkLabel: "Visit platform",
+    image: "/image/lead.png",
+    imageAlt: "Lead Tata Pravesh lead management platform",
+  },
   {
     title: "Jewelbox",
     description:
-      "A live storefront for lab-grown diamond jewellery. The Next.js frontend serves a WordPress-managed catalogue with responsive product imagery and a clean shopping experience.",
+      "A live Next.js storefront for lab-grown diamond jewellery, with products managed through WordPress.",
     tech: ["Next.js", "Headless WordPress"],
     highlights: [
-      "Production e-commerce site at jewelbox.co.in",
-      "Next.js storefront backed by WordPress-managed content",
+      "Live e-commerce site at jewelbox.co.in",
+      "Next.js frontend served from headless WordPress",
+      "Responsive product imagery and browsing",
     ],
     href: "https://jewelbox.co.in/",
     linkLabel: "Visit site",
@@ -238,11 +240,12 @@ export const featuredStats = [
   {
     title: "Paris Beans",
     description:
-      "A Paris-inspired café microsite for Hair Rap by YoYo. Built with React, Vite, and Framer Motion, it introduces the café experience with smooth motion and a responsive layout.",
+      "A single-page café microsite for Hair Rap by YoYo, built with React, Vite, and Framer Motion.",
     tech: ["React", "Vite", "Framer Motion"],
     highlights: [
       "Live at parisbeans.vercel.app",
-      "Fast single-page experience with motion-led storytelling",
+      "React and Vite single-page build",
+      "Scroll and entry transitions with Framer Motion",
     ],
     href: "https://parisbeans.vercel.app/",
     linkLabel: "Visit site",
@@ -252,21 +255,25 @@ export const featuredStats = [
   {
     title: "Vehicle Theft Analysis",
     description:
-      "A regional vehicle theft dashboard built with PostgreSQL and Power BI. I analyzed theft patterns across regions, found a 70.6% rise, and broke the results down so they could be used for planning and enforcement.",
+      "A Power BI dashboard over PostgreSQL data that surfaced a 70.6% rise in vehicle theft, with regional risk scores and heatmaps.",
     tech: ["PostgreSQL", "Power BI", "DAX"],
     highlights: [
-      "Found a 70.6% rise across monitored regions",
-      "Risk scoring and heatmaps by region",
+      "Uncovered a 70.6% rise across monitored regions",
+      "Risk scores and heatmaps broken down by region",
+      "PostgreSQL, Power BI, and DAX",
     ],
+    image: "/image/vechile.png",
+    imageAlt: "Vehicle theft analysis dashboard with regional risk insights",
   },
   {
     title: "Blinkit Sales Dashboard",
     description:
-      "A Blinkit sales dashboard built in Power BI with custom DAX measures, dynamic KPIs, and trend analysis for sales tracking.",
+      "A Power BI sales dashboard with custom DAX measures, period comparisons, and drill-downs into the numbers.",
     tech: ["Power BI", "DAX"],
     highlights: [
-      "Custom KPI definitions and live tracking",
-      "Sales trends with drill-downs",
+      "Custom DAX measures for KPI definitions",
+      "Trend analysis with drill-downs",
+      "Power BI and DAX",
     ],
   },
 ]

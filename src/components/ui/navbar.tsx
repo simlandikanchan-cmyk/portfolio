@@ -287,15 +287,6 @@ export function Navbar() {
 
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
               <div className="flex min-h-full flex-col">
-                <div className="flex items-center justify-between border-b border-border px-4 py-3 sm:px-8">
-                  <span className="font-mono text-eyebrow font-medium uppercase text-muted-foreground">
-                    NAVIGATION
-                  </span>
-                  <span className="font-mono text-eyebrow uppercase text-accent">
-                    INDEX
-                  </span>
-                </div>
-
                 <motion.nav
                   variants={drawerStagger}
                   initial={reduceMotion ? false : "hidden"}

@@ -29,7 +29,7 @@ const philosophyLead =
   "I care about what happens after an application goes live, not just whether the code compiles."
 
 const philosophyBody =
-  "I think about edge cases, how data moves through a system, what might fail under unexpected conditions, and whether another developer can understand and maintain the code later. Taking the time to get these details right makes applications more dependable and saves effort in the long run. That's the kind of engineering I aim to deliver."
+  "Most of my decisions come down to what happens when something goes wrong. What if a payment webhook arrives twice? What if two people edit the same record at once? What if the next developer can't tell why a query exists? I try to answer those questions early, because fixing them after launch costs more time and money. That also means writing code with the handover in mind, not just the ticket."
 
 export function About() {
   return (
@@ -76,7 +76,7 @@ export function About() {
           >
             <div className="flex items-center justify-between gap-3">
               <span className="font-mono text-meta text-accent">
-                core_strengths
+                how_i_work
               </span>
               <span className="font-mono text-meta tracking-widest text-muted-foreground">
                 {String(personalInfo.strengths.length).padStart(2, "0")}

@@ -30,15 +30,15 @@ const meta = [
 const architectureItems = [
   {
     title: "Five-step Razorpay verification",
-    body: "Server-side HMAC signing and webhook reconciliation verify every payment before it is trusted, keeping donation records accurate.",
+    body: "Payments are verified server-side with HMAC signatures and webhook reconciliation before the app treats them as successful. Duplicate requests and refunds are handled in the same flow.",
   },
   {
     title: "18 security controls",
-    body: "CSRF protection, rate limiting, role and status checks, KYC, and audit logging protect donor data and administrative actions.",
+    body: "CSRF protection, rate limiting, role-based permissions, KYC checks, account-status enforcement, and audit logging protect donor data and admin actions.",
   },
   {
     title: "AI donor support",
-    body: "An Anthropic Claude-powered chatbot answers common donor questions instantly, keeping the giving flow accessible without adding support load.",
+    body: "A Claude-powered chatbot answers common donor questions inside the flow, so people don't have to leave the page or wait for a reply.",
   },
 ]
 
@@ -49,11 +49,11 @@ const highlightsItems = [
   },
   {
     title: "Idempotent payments",
-    body: "Duplicate requests and failures are handled safely, with automated refunds keeping every donation and record reconciled.",
+    body: "Retries don't create double charges. Refunds are automated and reconciled against the original donation.",
   },
   {
     title: "Full transaction audit trail",
-    body: "Every transaction is traceable, giving the team a dependable record for support, compliance, and dispute resolution.",
+    body: "Every transaction leaves a traceable record, which the team uses for support queries, compliance checks, and disputes.",
   },
 ]
 
@@ -72,8 +72,8 @@ export function CaseStudy() {
         <SectionHeading
           number="03"
           label="FEATURED PROJECT"
-          title="DonateBazaar — Built for Reliable Online Fundraising"
-          description="A Laravel fundraising platform built to make online giving secure, transparent, and dependable. I owned the backend end to end — architecture, data model, payment lifecycle, security, and donor support — so campaigns and donations stay consistent under real-world use."
+          title="DonateBazaar: Built for Reliable Online Fundraising"
+          description="DonateBazaar is a Laravel fundraising platform. I owned the backend: architecture, data model, payment lifecycle, security, and donor support. The goal throughout was simple: every donation should be verified, recorded, and easy to trace."
         />
 
         <motion.div
@@ -241,8 +241,8 @@ export function CaseStudy() {
           {...fadeUp(0.32)}
           className="mt-6 rounded-xl border border-dashed border-border bg-surface/60 px-5 py-4 text-center font-mono text-meta text-muted-foreground"
         >
-          Demo available on request · Walkthrough covers payments, security, and
-          the admin audit trail.
+          Demo available on request. I can walk through the payment flow,
+          security controls, and admin audit trail.
         </motion.p>
       </div>
     </section>

@@ -12,7 +12,8 @@ export function Skills() {
         <SectionHeading
           number="04"
           label="TOOLBOX"
-          title="Technical Skills"
+          title="Tools I Work With"
+          description="The stack I use day to day, plus tools I've picked up through project work."
         />
 
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">

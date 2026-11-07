@@ -211,8 +211,8 @@ export function Contact() {
         <SectionHeading
           number="07"
           label="GET IN TOUCH"
-          title="Let's build something meaningful."
-          description="Open to full-time backend and full-stack roles. Have a project in mind or an opportunity to discuss? I'd love to hear from you."
+          title="Let's talk."
+          description="I'm open to full-time backend and full-stack roles. If you have an opportunity or a project to discuss, the form below opens your email app with the message ready to send."
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">

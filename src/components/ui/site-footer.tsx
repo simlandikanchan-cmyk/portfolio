@@ -30,10 +30,10 @@ export function SiteFooter() {
               {personalInfo.name}
             </p>
             <p className="mt-1 font-mono text-eyebrow uppercase text-accent">
-              Full-Stack Developer
+              {personalInfo.role}
             </p>
             <p className="mt-3 text-body-sm text-muted-foreground">
-              Building thoughtful digital experiences.
+              Backend and full-stack work for production web apps.
             </p>
           </div>
 

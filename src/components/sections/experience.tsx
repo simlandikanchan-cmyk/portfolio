@@ -22,7 +22,7 @@ export function Experience() {
           number="02"
           label="EXPERIENCE"
           title="Where I've Worked"
-          description="A track record of building and shipping production web applications across product and client teams."
+          description="The roles I've held since 2022 and the work I owned in each."
         />
 
         <div className="relative mt-12">

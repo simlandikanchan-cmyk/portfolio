@@ -163,6 +163,7 @@ export function Education() {
           number="06"
           label="LEARNING"
           title="Education & Certifications"
+          description="The formal side of my background, plus the certification I completed for my Power BI work."
         />
 
         <div className="mt-12 grid gap-4 lg:grid-cols-12">

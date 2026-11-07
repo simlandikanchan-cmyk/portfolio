@@ -15,7 +15,7 @@ export function Projects() {
           number="05"
           label="PORTFOLIO"
           title="Projects"
-          description="A selection of production websites, platforms, and data products shipped for real users and businesses."
+          description="Sites, platforms, and dashboards I've built or worked on, with links to the live versions where they exist."
         />
 
         <div className="mt-12 grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
