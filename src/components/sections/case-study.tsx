@@ -42,6 +42,14 @@ const architectureItems = [
   },
 ]
 
+const paymentFlow = [
+  { step: "Create order", detail: "server-side" },
+  { step: "Checkout", detail: "Razorpay" },
+  { step: "Verify signature", detail: "HMAC" },
+  { step: "Handle webhook", detail: "idempotent" },
+  { step: "Reconcile", detail: "refunds" },
+]
+
 const highlightsItems = [
   {
     title: "Reliable email delivery",
@@ -112,6 +120,40 @@ export function CaseStudy() {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          {...fadeUp(0.14)}
+          className="mt-4 rounded-2xl border border-border bg-surface p-4 sm:p-5"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">
+              payment_flow
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+              five-step verification
+            </span>
+          </div>
+          <ol className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-5">
+            {paymentFlow.map((item, i) => (
+              <li
+                key={item.step}
+                className={`relative rounded-xl border border-border/80 bg-background/40 p-3 ${
+                  i === paymentFlow.length - 1 ? "col-span-2 sm:col-span-1" : ""
+                }`}
+              >
+                <span className="font-mono text-[10px] tabular-nums text-accent">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <p className="mt-1 text-meta font-medium leading-snug text-foreground">
+                  {item.step}
+                </p>
+                <p className="font-mono text-[10px] lowercase tracking-wide text-muted-foreground">
+                  {item.detail}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </motion.div>
 
         <motion.div
           {...fadeUp(0.18)}

@@ -52,6 +52,9 @@ export function Experience() {
                       aria-controls={`exp-panel-${idx}`}
                       className="flex w-full items-start justify-between gap-4 p-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring sm:p-6"
                     >
+                      <span className="mt-0.5 hidden h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-border bg-background/60 font-mono text-[10px] tabular-nums text-muted-foreground sm:flex">
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-2">
                           <h3 className="font-sans text-card font-semibold">
@@ -67,7 +70,7 @@ export function Experience() {
                             </span>
                           )}
                           {exp.note && (
-                            <span className="rounded border border-border px-1.5 py-0.5 font-mono text-[10px] uppercase leading-none tracking-wide text-muted-foreground/80">
+                            <span className="rounded border border-border px-1.5 py-0.5 font-mono text-[10px] uppercase leading-none tracking-wide text-muted-foreground">
                               {exp.note}
                             </span>
                           )}

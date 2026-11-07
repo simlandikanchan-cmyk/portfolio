@@ -82,6 +82,10 @@
   border-color: var(--border);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--base);
   color: var(--foreground);

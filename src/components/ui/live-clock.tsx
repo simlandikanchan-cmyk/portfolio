@@ -32,7 +32,7 @@ export function LiveClock({ className }: { className?: string }) {
     >
       <Clock3 aria-hidden className="h-3 w-3 text-accent/70" strokeWidth={1.8} />
       <span className="min-w-[4.5rem] text-center">{time ?? "--:--:--"}</span>
-      <span className="text-[9px] uppercase tracking-[0.12em] text-muted-foreground/70">
+      <span className="text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
         IST
       </span>
     </div>

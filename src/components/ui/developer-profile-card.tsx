@@ -147,7 +147,7 @@ export function DeveloperProfileCard() {
             </span>
 
             <div className="absolute inset-x-0 bottom-0 p-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/60">
+              <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/80">
                 {personalInfo.role}
               </p>
               <p className="mt-1 text-lg font-semibold leading-tight text-white">

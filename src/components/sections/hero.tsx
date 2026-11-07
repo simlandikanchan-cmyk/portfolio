@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
 import { ArrowDown } from "lucide-react"
 import { DeveloperProfileCard } from "@/components/ui/developer-profile-card"
@@ -45,6 +45,7 @@ function SplitText({
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null)
+  const [isDesktop, setIsDesktop] = useState(false)
   const reduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -54,11 +55,19 @@ export function Hero() {
   const glowYSecondary = useTransform(scrollYProgress, [0, 1], ["0%", "-4%"])
   const contentOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0])
 
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 1024px)")
+    const update = () => setIsDesktop(query.matches)
+    update()
+    query.addEventListener("change", update)
+    return () => query.removeEventListener("change", update)
+  }, [])
+
   return (
     <section
       id="hero"
       ref={ref}
-      className="relative min-h-screen flex items-center px-4 sm:px-8 pt-16 pb-24 lg:pb-0 overflow-hidden"
+      className="relative flex min-h-[100svh] items-center overflow-hidden px-4 pb-16 pt-24 sm:px-8 sm:pb-24 sm:pt-28 lg:pb-20 lg:pt-28"
     >
       <div className="absolute inset-0 -z-10">
         <motion.div
@@ -72,8 +81,10 @@ export function Hero() {
       </div>
 
       <motion.div
-        style={reduceMotion ? undefined : { opacity: contentOpacity }}
-        className="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-10 lg:gap-8 items-center"
+        style={
+          isDesktop && !reduceMotion ? { opacity: contentOpacity } : undefined
+        }
+        className="mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-12 lg:gap-8"
       >
         <div className="lg:col-span-7 relative">
           <motion.div
@@ -147,36 +158,30 @@ export function Hero() {
             >
               View Resume
             </MagneticButton>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.46, duration: 0.4 }}
-            className="mt-6 flex items-center gap-3"
-          >
-            <motion.a
-              href={personalInfo.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full border border-border p-2 text-muted-foreground transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.95 }}
-              aria-label="LinkedIn"
-            >
-              <LinkedInIcon className="w-4 h-4" />
-            </motion.a>
-            <motion.a
-              href={personalInfo.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full border border-border p-2 text-muted-foreground transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.95 }}
-              aria-label="GitHub"
-            >
-              <GitHubIcon className="w-4 h-4" />
-            </motion.a>
+            <div className="flex items-center gap-2 sm:ml-1 sm:border-l sm:border-border sm:pl-4">
+              <motion.a
+                href={personalInfo.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-border p-2 text-muted-foreground transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="LinkedIn"
+              >
+                <LinkedInIcon className="w-4 h-4" />
+              </motion.a>
+              <motion.a
+                href={personalInfo.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-border p-2 text-muted-foreground transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="GitHub"
+              >
+                <GitHubIcon className="w-4 h-4" />
+              </motion.a>
+            </div>
           </motion.div>
 
           <motion.div
@@ -208,7 +213,7 @@ export function Hero() {
             behavior: reduceMotion ? "auto" : "smooth",
           })
         }
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 rounded-full p-1 text-muted-foreground transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 rounded-full p-1 text-muted-foreground transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:block"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.25 }}

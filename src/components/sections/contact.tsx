@@ -15,6 +15,7 @@ import {
   type LucideIcon,
 } from "lucide-react"
 import { SectionHeading } from "@/components/ui/section-heading"
+import { GitHubIcon, LinkedInIcon } from "@/components/ui/social-icons"
 import { fadeUp } from "@/lib/motion"
 import { personalInfo } from "@/lib/resume-data"
 import { cn } from "@/lib/utils"
@@ -30,6 +31,7 @@ type ContactItem = {
   label: string
   value: string
   href?: string
+  chips?: string[]
 }
 
 const inputClasses =
@@ -66,11 +68,12 @@ const contactItems: ContactItem[] = [
   {
     icon: MapPinned,
     label: "Preferred locations",
-    value: personalInfo.preferredLocations.join(" · "),
+    value: personalInfo.preferredLocations.join(", "),
+    chips: [...personalInfo.preferredLocations],
   },
 ]
 
-function ContactCard({ icon: Icon, label, value, href }: ContactItem) {
+function ContactCard({ icon: Icon, label, value, href, chips }: ContactItem) {
   const content = (
     <>
       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-accent/15 bg-accent/10 text-accent transition-colors group-hover:border-accent/30 group-hover:bg-accent/15">
@@ -80,14 +83,27 @@ function ContactCard({ icon: Icon, label, value, href }: ContactItem) {
         <span className="block font-mono text-eyebrow uppercase text-muted-foreground">
           {label}
         </span>
-        <span
-          className={cn(
-            "mt-0.5 block text-body-sm font-medium [overflow-wrap:anywhere]",
-            href && "transition-colors group-hover:text-accent",
-          )}
-        >
-          {value}
-        </span>
+        {chips ? (
+          <span className="mt-1.5 flex flex-wrap gap-1">
+            {chips.map((chip) => (
+              <span
+                key={chip}
+                className="rounded border border-border bg-background/60 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground"
+              >
+                {chip}
+              </span>
+            ))}
+          </span>
+        ) : (
+          <span
+            className={cn(
+              "mt-0.5 block text-body-sm font-medium [overflow-wrap:anywhere]",
+              href && "transition-colors group-hover:text-accent",
+            )}
+          >
+            {value}
+          </span>
+        )}
       </span>
     </>
   )
@@ -242,6 +258,29 @@ export function Contact() {
                 </span>
               </a>
             </motion.div>
+            <motion.div
+              {...fadeUp(0.48)}
+              className="mt-4 flex items-center gap-2"
+            >
+              <a
+                href={personalInfo.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-ui text-muted-foreground transition-colors duration-200 hover:border-accent/40 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                <GitHubIcon className="h-4 w-4" aria-hidden="true" />
+                GitHub
+              </a>
+              <a
+                href={personalInfo.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-ui text-muted-foreground transition-colors duration-200 hover:border-accent/40 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                <LinkedInIcon className="h-4 w-4" aria-hidden="true" />
+                LinkedIn
+              </a>
+            </motion.div>
           </div>
 
           <motion.form
@@ -264,9 +303,9 @@ export function Contact() {
               <div>
                 <label
                   htmlFor="name"
-                  className="mb-1.5 block font-sans text-meta font-medium capitalize text-foreground/80"
+                  className="mb-1.5 block font-sans text-meta font-medium text-foreground/80"
                 >
-                  name
+                  Name
                 </label>
                 <input
                   id="name"
@@ -290,9 +329,9 @@ export function Contact() {
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-1.5 block font-sans text-meta font-medium capitalize text-foreground/80"
+                  className="mb-1.5 block font-sans text-meta font-medium text-foreground/80"
                 >
-                  email
+                  Email
                 </label>
                 <input
                   id="email"
@@ -316,9 +355,9 @@ export function Contact() {
               <div>
                 <label
                   htmlFor="message"
-                  className="mb-1.5 block font-sans text-meta font-medium capitalize text-foreground/80"
+                  className="mb-1.5 block font-sans text-meta font-medium text-foreground/80"
                 >
-                  message
+                  Message
                 </label>
                 <textarea
                   id="message"
@@ -364,6 +403,10 @@ export function Contact() {
                   </>
                 )}
               </motion.button>
+
+              <p className="text-center font-mono text-[11px] text-muted-foreground">
+                Usually replies within a day
+              </p>
 
               <AnimatePresence initial={false}>
                 {status === "opening" && (

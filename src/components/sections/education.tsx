@@ -133,31 +133,14 @@ function ScoreRingSmall({ score }: { score: string }) {
   )
 }
 
-function ScoreBar({ value }: { value: number }) {
-  return (
-    <div className="mt-4">
-      <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-        <span>score</span>
-        <span className="text-accent">{value}%</span>
-      </div>
-      <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-muted">
-        <motion.div
-          className="h-full rounded-full bg-gradient-to-r from-accent/50 to-accent"
-          initial={{ width: 0 }}
-          whileInView={{ width: `${value}%` }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        />
-      </div>
-    </div>
-  )
-}
-
 export function Education() {
   const [featured, ...others] = education
 
   return (
-    <section className="py-20 sm:py-28 px-4 sm:px-8 bg-muted/30">
+    <section
+      id="education"
+      className="scroll-mt-20 bg-muted/30 px-4 py-20 sm:px-8 sm:py-28"
+    >
       <div className="mx-auto max-w-5xl">
         <SectionHeading
           number="06"
@@ -206,12 +189,6 @@ export function Education() {
                   {featured.period}
                 </span>
               </div>
-
-              {featured.score && (
-                <div className="relative">
-                  <ScoreBar value={scoreValue(featured.score)} />
-                </div>
-              )}
             </motion.article>
           )}
 
@@ -253,12 +230,6 @@ export function Education() {
                     </div>
                     {edu.score && <ScoreRingSmall score={edu.score} />}
                   </div>
-
-                  {edu.score && (
-                    <div className="relative">
-                      <ScoreBar value={value} />
-                    </div>
-                  )}
                 </motion.article>
               )
             })}

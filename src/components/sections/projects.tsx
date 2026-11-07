@@ -70,6 +70,23 @@ export function Projects() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>
+
+                  {project.href && (
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-x-0 bottom-0 hidden items-end justify-between gap-2 bg-gradient-to-t from-black/75 via-black/20 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:flex motion-reduce:opacity-100"
+                    >
+                      <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/90">
+                        {project.linkLabel ?? "View project"}
+                      </span>
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-black">
+                        <ArrowUpRight
+                          aria-hidden="true"
+                          className="h-3.5 w-3.5"
+                        />
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex flex-1 flex-col p-5">
@@ -118,7 +135,6 @@ export function Projects() {
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
                     className="group block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                    aria-label={`${project.title} — ${project.linkLabel ?? "View project"}`}
                   >
                     {card}
                   </a>

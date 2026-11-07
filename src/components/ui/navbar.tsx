@@ -143,7 +143,6 @@ export function Navbar() {
         >
           <button
             onClick={handleBrandClick}
-            aria-label={`${personalInfo.name} — back to top`}
             className="group flex items-center gap-2.5 rounded-xl py-1 pr-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-accent font-mono text-[0.7rem] font-bold tracking-tight text-accent-foreground shadow-sm ring-1 ring-accent/20 transition-transform duration-300 group-hover:-translate-y-0.5 motion-reduce:transform-none">
@@ -161,6 +160,7 @@ export function Navbar() {
                 Full-Stack Developer
               </span>
             </span>
+            <span className="sr-only">Back to top</span>
           </button>
 
           <div className="hidden lg:flex items-center gap-1">
@@ -253,7 +253,6 @@ export function Navbar() {
             <div className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4 sm:px-8">
               <button
                 onClick={handleBrandClick}
-                aria-label={`${personalInfo.name} — back to top`}
                 className="flex items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-accent font-mono text-[0.7rem] font-bold tracking-tight text-accent-foreground shadow-sm ring-1 ring-accent/20">
@@ -271,6 +270,7 @@ export function Navbar() {
                     Full-Stack Developer
                   </span>
                 </span>
+                <span className="sr-only">Back to top</span>
               </button>
               <div className="flex items-center gap-2">
                 <ThemeToggle />
@@ -313,7 +313,7 @@ export function Navbar() {
                             "font-mono text-meta tabular-nums transition-colors duration-200",
                             isActive
                               ? "text-accent"
-                              : "text-muted-foreground/70 group-hover:text-accent"
+                              : "text-muted-foreground group-hover:text-accent"
                           )}
                         >
                           {String(i + 1).padStart(2, "0")}
