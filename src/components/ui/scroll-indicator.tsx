@@ -52,7 +52,7 @@ export function ScrollIndicator() {
                   behavior: reduceMotion ? "auto" : "smooth",
                 })
               }
-              className="group relative flex items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="group relative flex h-6 w-6 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label={link.label}
             >
               <span

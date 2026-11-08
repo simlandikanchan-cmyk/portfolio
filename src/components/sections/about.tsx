@@ -26,10 +26,10 @@ const strengthIcons: Record<string, LucideIcon> = {
 }
 
 const philosophyLead =
-  "I care about what happens after an application goes live, not just whether the code compiles."
+  "I care about what happens after an application goes live, not just whether the code works."
 
 const philosophyBody =
-  "Most of my decisions come down to what happens when something goes wrong. What if a payment webhook arrives twice? What if two people edit the same record at once? What if the next developer can't tell why a query exists? I try to answer those questions early, because fixing them after launch costs more time and money. That also means writing code with the handover in mind, not just the ticket."
+  "I believe good software engineering goes beyond writing code that simply works. It's about anticipating problems before they happen and building systems that can handle real-world challenges. What happens if a payment webhook is received twice? What if two users update the same record simultaneously? What if another developer struggles to understand why a particular query exists? These are the questions I consider early in the development process. I focus on building reliable systems, handling edge cases, maintaining data integrity, and writing clean, well-documented code that other developers can confidently work with. For me, quality code isn't just about solving today's problem — it's about making tomorrow's maintenance easier."
 
 export function About() {
   return (

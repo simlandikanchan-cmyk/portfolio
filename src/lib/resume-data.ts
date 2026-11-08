@@ -41,9 +41,9 @@ export const personalInfo = {
   role: "Full-Stack / Backend Developer",
   tagline: "Laravel · PHP · MySQL · System Design",
   heroSummary:
-    "I've spent four years building Laravel backends and dashboards for production apps. Most of that work has been payments, application security, and database design that has to hold up after launch.",
+    "I build scalable web applications and robust backend systems using Laravel. My focus is on secure application development, REST APIs, database architecture, and creating reliable solutions that perform well in real-world environments.",
   intro:
-    "I'm a full-stack developer with over four years of experience, mostly in PHP, Laravel, and MySQL. I've worked on payment processing, application security, database optimisation, and Power BI dashboards that turn raw data into something teams can act on. I like the parts of development that don't show up in a demo: edge cases, data flow, and code that the next developer can follow. That is what keeps an application dependable once it is live.",
+    "I'm a full-stack developer with over four years of experience building web applications using PHP, Laravel, and MySQL. My work spans backend development, payment integrations, application security, database optimization, and Power BI dashboards that transform raw data into meaningful insights. I enjoy solving the challenges behind the scenes — designing efficient data flows, handling edge cases, improving performance, and writing clean, maintainable code. For me, good software isn't just about working features; it's about building reliable systems that remain secure, scalable, and easy to maintain long after launch.",
   phone: "+91-8617830875",
   email: "1707368kanchan@gmail.com",
   location: "Suri, Birbhum, West Bengal 731101",

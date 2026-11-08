@@ -149,8 +149,8 @@ export function SiteFooter() {
 
         <div className="mt-10 flex flex-col gap-4 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-mono text-meta text-muted-foreground">
-            &copy; {new Date().getFullYear()} {personalInfo.name}. Built with
-            Next.js and Tailwind CSS.
+            &copy; {new Date().getFullYear()} {personalInfo.name}. Crafted with
+            care using Next.js &amp; Tailwind CSS.
           </p>
           <motion.button
             type="button"

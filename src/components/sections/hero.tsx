@@ -130,14 +130,9 @@ export function Hero() {
             </span>
           </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.4 }}
-            className="mt-4 max-w-lg text-body text-muted-foreground"
-          >
+          <p className="mt-4 max-w-lg text-body text-muted-foreground">
             {personalInfo.heroSummary}
-          </motion.p>
+          </p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
